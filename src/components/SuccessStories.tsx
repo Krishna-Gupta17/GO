@@ -1,0 +1,109 @@
+import React from 'react';
+import { Star, Quote } from 'lucide-react';
+import { motion } from 'framer-motion';
+
+const SuccessStories: React.FC = () => {
+  const stories = [
+    {
+      id: 1,
+      name: "Rahul Kumar",
+      exam: "JEE Advanced",
+      city: "Delhi",
+      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80",
+      story: "My mentor Anjali helped me navigate Delhi's metro system and found a quiet place near the exam center for last-minute revision. Her calm presence on exam morning made all the difference!",
+      rating: 5,
+      mentorHelp: "Travel guidance & Exam day support"
+    },
+    {
+      id: 2,
+      name: "Sneha Patel",
+      exam: "NEET",
+      city: "Pune",
+      image: "https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80",
+      story: "I was so nervous about traveling alone to Pune. My mentor Vikram not only guided me to safe accommodation but also shared his exam strategies. I felt like I had a big brother looking out for me.",
+      rating: 5,
+      mentorHelp: "Travel & stay + Strategy session"
+    },
+    {
+      id: 3,
+      name: "Arjun Singh",
+      exam: "CAT",
+      city: "Bangalore",
+      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80",
+      story: "The traffic in Bangalore was my biggest worry. My mentor Kavya shared the perfect route and timing. She even recommended a great breakfast place that kept me energized throughout the exam!",
+      rating: 5,
+      mentorHelp: "Local travel tips & Morning support"
+    }
+  ];
+
+  return (
+    <section className="py-20 bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 mb-4" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+            Success Stories from Our Community
+          </h2>
+          <p className="text-xl text-slate-600 max-w-3xl mx-auto" style={{ fontFamily: 'Lato, sans-serif' }}>
+            Real experiences from students who found support, guidance, and friendship through our mentor network.
+          </p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {stories.map((story, index) => (
+            <motion.div
+              key={story.id}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              viewport={{ once: true }}
+              className="bg-gradient-to-br from-emerald-50 to-sky-50 p-8 rounded-2xl shadow-sm hover:shadow-md transition-shadow"
+            >
+              <Quote className="h-8 w-8 text-emerald-600 mb-4" />
+              
+              <p className="text-slate-700 mb-6 leading-relaxed" style={{ fontFamily: 'Lato, sans-serif' }}>
+                "{story.story}"
+              </p>
+
+              <div className="flex items-center mb-4">
+                {[...Array(story.rating)].map((_, i) => (
+                  <Star key={i} className="h-4 w-4 text-yellow-400 fill-current" />
+                ))}
+              </div>
+
+              <div className="flex items-center mb-4">
+                <img
+                  src={story.image}
+                  alt={story.name}
+                  className="w-12 h-12 rounded-full mr-4 object-cover"
+                  loading="lazy"
+                />
+                <div>
+                  <h4 className="font-semibold text-slate-900" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+                    {story.name}
+                  </h4>
+                  <p className="text-sm text-slate-600" style={{ fontFamily: 'Lato, sans-serif' }}>
+                    {story.exam} • {story.city}
+                  </p>
+                </div>
+              </div>
+
+              <div className="bg-white px-3 py-2 rounded-lg">
+                <p className="text-xs text-emerald-600 font-medium" style={{ fontFamily: 'Lato, sans-serif' }}>
+                  {story.mentorHelp}
+                </p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default SuccessStories;
