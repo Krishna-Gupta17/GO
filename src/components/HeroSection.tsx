@@ -69,8 +69,8 @@ const HeroSection: React.FC = () => {
               className="rounded-2xl shadow-2xl w-full h-96 object-cover"
               loading="lazy"
             />
-            <div className="absolute -bottom-6 -left-6 bg-white p-6 rounded-xl shadow-lg">
-              <p className="text-sm text-slate-600 mb-2" style={{ fontFamily: 'Lato, sans-serif' }}>
+            {/* <div className="absolute -bottom-6 -left-6 bg-white p-6 rounded-xl shadow-lg">
+              <p className="text-sm text-slate-600 mb-2" style={{ fontFamily: 'Sk Modernist, sans-serif' }}>
                 "My mentor made exam day stress-free!"
               </p>
               <div className="flex items-center">
@@ -84,7 +84,7 @@ const HeroSection: React.FC = () => {
                   Priya S.
                 </span>
               </div>
-            </div>
+            </div> */}
           </motion.div>
         </div>
       </div>

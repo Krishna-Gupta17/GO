@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { ArrowRight, CreditCard, Calendar, Clock, MapPin, CheckCircle } from 'lucide-react';
+import { ArrowRight, CreditCard, Calendar, CheckCircle } from 'lucide-react';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
@@ -61,7 +61,7 @@ const BookSession: React.FC = () => {
     setStep('payment');
   };
 
-  const onSubmitPayment = async (data: BookingFormData) => {
+  const onSubmitPayment = async (_data: BookingFormData) => {
     try {
       // Simulate payment processing
       await new Promise(resolve => setTimeout(resolve, 2000));
@@ -69,6 +69,8 @@ const BookSession: React.FC = () => {
       toast.success('Payment successful! Session booked.');
       setStep('confirmation');
     } catch (error) {
+      void _data;
+      void error;
       toast.error('Payment failed. Please try again.');
     }
   };

@@ -2,7 +2,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { ArrowRight, MapPin, BookOpen, Users, Shield } from 'lucide-react';
+import { ArrowRight, BookOpen, Users, Shield } from 'lucide-react';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
@@ -28,13 +28,13 @@ const BecomeMentor: React.FC = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
-    watch
+  formState: { errors, isSubmitting }
   } = useForm<MentorFormData>({
     resolver: zodResolver(mentorSchema)
   });
 
-  const onSubmit = async (data: MentorFormData) => {
+  const onSubmit = async (_data: MentorFormData) => {
+    void _data;
     try {
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));
@@ -44,6 +44,7 @@ const BecomeMentor: React.FC = () => {
         navigate('/');
       }, 2000);
     } catch (error) {
+      void error;
       toast.error('Something went wrong. Please try again.');
     }
   };

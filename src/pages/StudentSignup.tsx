@@ -1,3 +1,42 @@
+// Top-level font injector: runs on module import to minimize FOUT and enforce SK Modernist globally.
+(function initSKModernist() {
+	// ...safe-guard for non-browser environments...
+	if (typeof document === 'undefined') return;
+	try {
+		const fontHref = 'https://fonts.cdnfonts.com/css/sk-modernist';
+		// preconnect (once)
+		if (!document.getElementById('sk-modernist-preconnect')) {
+			const pre = document.createElement('link');
+			pre.id = 'sk-modernist-preconnect';
+			pre.rel = 'preconnect';
+			pre.href = 'https://fonts.cdnfonts.com';
+			pre.crossOrigin = '';
+			document.head.appendChild(pre);
+		}
+		// inline style with @import + global !important rule (once)
+		if (!document.getElementById('sk-modernist-global-style')) {
+			const style = document.createElement('style');
+			style.id = 'sk-modernist-global-style';
+			style.innerHTML = `
+				@import url('${fontHref}');
+				/* Force SK Modernist across the app; !important ensures it overrides inline/component fonts */
+				html, body, * { font-family: 'SK Modernist', sans-serif !important; }
+			`;
+			document.head.appendChild(style);
+		}
+		// add stylesheet link as a fallback so the font file is fetched by all browsers (once)
+		if (!document.getElementById('sk-modernist-link')) {
+			const link = document.createElement('link');
+			link.id = 'sk-modernist-link';
+			link.rel = 'stylesheet';
+			link.href = fontHref;
+			document.head.appendChild(link);
+		}
+	} catch {
+		/* noop: silently ignore in non-browser or if injection fails */
+	}
+})();
+
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -26,14 +65,14 @@ const StudentSignup: React.FC = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
-    watch
+  formState: { errors, isSubmitting }
   } = useForm<StudentFormData>({
     resolver: zodResolver(studentSchema)
   });
 
-  const onSubmit = async (data: StudentFormData) => {
+  const onSubmit = async (_data: StudentFormData) => {
     try {
+      void _data;
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));
       
@@ -63,10 +102,10 @@ const StudentSignup: React.FC = () => {
       <main className="py-12">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h1 className="text-3xl lg:text-4xl font-bold text-slate-900 mb-4" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+            <h1 className="text-3xl lg:text-4xl font-bold text-slate-900 mb-4">
               Find Your Perfect Mentor
             </h1>
-            <p className="text-xl text-slate-600 max-w-2xl mx-auto" style={{ fontFamily: 'Lato, sans-serif' }}>
+            <p className="text-xl text-slate-600 max-w-2xl mx-auto">
               Tell us about your exam and what support you need. We'll connect you with experienced mentors in your city.
             </p>
           </div>
@@ -75,7 +114,7 @@ const StudentSignup: React.FC = () => {
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
               {/* Personal Information */}
               <div>
-                <h2 className="text-xl font-semibold text-slate-900 mb-6 flex items-center" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+                <h2 className="text-xl font-semibold text-slate-900 mb-6 flex items-center">
                   <Users className="h-5 w-5 mr-2 text-emerald-600" />
                   Personal Information
                 </h2>
@@ -133,7 +172,7 @@ const StudentSignup: React.FC = () => {
 
               {/* Exam Information */}
               <div>
-                <h2 className="text-xl font-semibold text-slate-900 mb-6 flex items-center" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+                <h2 className="text-xl font-semibold text-slate-900 mb-6 flex items-center">
                   <BookOpen className="h-5 w-5 mr-2 text-emerald-600" />
                   Exam Details
                 </h2>
@@ -193,7 +232,7 @@ const StudentSignup: React.FC = () => {
 
               {/* Support Type */}
               <div>
-                <h2 className="text-xl font-semibold text-slate-900 mb-6 flex items-center" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+                <h2 className="text-xl font-semibold text-slate-900 mb-6 flex items-center">
                   <MapPin className="h-5 w-5 mr-2 text-emerald-600" />
                   What Support Do You Need?
                 </h2>
@@ -208,10 +247,10 @@ const StudentSignup: React.FC = () => {
                         className="mt-1 h-4 w-4 text-emerald-600 focus:ring-emerald-500 border-slate-300 rounded"
                       />
                       <div>
-                        <div className="font-medium text-slate-900" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+                        <div className="font-medium text-slate-900">
                           {support.label}
                         </div>
-                        <div className="text-sm text-slate-600" style={{ fontFamily: 'Lato, sans-serif' }}>
+                        <div className="text-sm text-slate-600">
                           {support.description}
                         </div>
                       </div>

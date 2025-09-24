@@ -8,6 +8,9 @@ export default {
   theme: {
     extend: {
       fontFamily: {
+        // Make Sk-Modernist the default `font-sans` used by Tailwind utilities
+        'sans': ['Sk-Modernist', 'ui-sans-serif', 'system-ui', '-apple-system', '"Segoe UI"', 'Roboto', '"Helvetica Neue"', 'Arial', '"Noto Sans"', 'sans-serif'],
+        'skmodernist': ['Sk-Modernist', 'sans-serif'],
         'montserrat': ['Montserrat', 'sans-serif'],
         'lato': ['Lato', 'sans-serif'],
       },
