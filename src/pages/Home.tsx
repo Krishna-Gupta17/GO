@@ -5,6 +5,7 @@ import HeroSection from '../components/HeroSection';
 import HowItWorks from '../components/HowItWorks';
 import SuccessStories from '../components/SuccessStories';
 
+
 const Home: React.FC = () => {
   return (
     <div className="min-h-screen">

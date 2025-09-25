@@ -39,15 +39,15 @@ const BookSession: React.FC = () => {
   });
 
   const sessionTypes = [
-    { id: 'travel', label: 'Travel & Stay Guidance', price: 500 },
-    { id: 'examday', label: 'Exam Day Support', price: 300 },
-    { id: 'strategy', label: 'Exam Strategy Session', price: 400 }
+    { id: 'travel', label: 'Travel Guidance', price: 50 },
+    { id: 'examday', label: 'Travel & Stay guidance', price: 80 },
+    { id: 'strategy', label: 'Travel + Stay + Exam Strategy', price: 120 }
   ];
 
   const durations = [
-    { id: '30', label: '30 minutes', price: 200 },
-    { id: '60', label: '1 hour', price: 400 },
-    { id: '90', label: '1.5 hours', price: 600 }
+    { id: '30', label: '30 minutes', price: 50 },
+    { id: '60', label: '1 hour', price: 90 },
+    { id: '90', label: '1.5 hours', price: 130 }
   ];
 
   const paymentMethods = [

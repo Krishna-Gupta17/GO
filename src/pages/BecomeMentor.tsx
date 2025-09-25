@@ -71,8 +71,8 @@ const BecomeMentor: React.FC = () => {
 
   const supportTypes = [
     { id: 'travel', label: 'Travel Guidance', description: 'Help with routes, local tips' },
-    { id: 'examday', label: 'Travel & Stay guidance', description: 'Help with routes, accomodation and local tips all in one ' },
-    { id: 'strategy', label: 'Travel+ Stay+ Exam-Strategy', description: 'Mindset, confidence building, study tips' }
+    { id: 'examday', label: 'Travel & Stay guidance', description: 'Help with routes, accomodation and local tips in one place!' },
+    { id: 'strategy', label: 'Travel+ Stay+ Exam-Strategy', description: 'Mindset, confidence building, study tipsroutes, accomodation and local tips everything at your fingertips!' }
   ];
 
   const years = Array.from({ length: 10 }, (_, i) => (new Date().getFullYear() - i).toString());
