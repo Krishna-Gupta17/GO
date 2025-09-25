@@ -35,6 +35,7 @@ const Header: React.FC = () => {
   const isActive = (path: string) => location.pathname === path;
 
   return (
+    <>
     <header
       className={cx(
         'fixed top-0 inset-x-0 z-40 transition-all duration-300',
@@ -150,6 +151,12 @@ const Header: React.FC = () => {
         </div>
       </div>
     </header>
+    {/* Spacer only on non-home pages to offset fixed header height.
+        Home page ("/") has its own hero spacing, so we skip it there. */}
+    {location.pathname !== '/' && (
+      <div aria-hidden="true" className={scrolled ? 'h-16' : 'h-20'} />
+    )}
+    </>
   );
 };
 
