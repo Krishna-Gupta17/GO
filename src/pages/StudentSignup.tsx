@@ -41,7 +41,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { ArrowRight, MapPin, BookOpen, Users } from 'lucide-react';
+import { ArrowRight, MapPin, BookOpen, Users, Home, Plane } from 'lucide-react';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
@@ -54,7 +54,11 @@ const studentSchema = z.object({
   examType: z.string().min(1, 'Please select your exam type'),
   examCity: z.string().min(1, 'Please enter your exam city'),
   examDate: z.string().min(1, 'Please select your exam date'),
+  examCenterAddress: z.string().min(1, 'Please enter your exam center address'),
   supportType: z.array(z.string()).min(1, 'Please select at least one support type'),
+  hotelPriceRange: z.string().optional(),
+  travelMode: z.array(z.string()).optional(),
+  travelPreference: z.array(z.string()).optional(),
   additionalInfo: z.string().optional()
 });
 
@@ -65,10 +69,18 @@ const StudentSignup: React.FC = () => {
   const {
     register,
     handleSubmit,
-  formState: { errors, isSubmitting }
+    watch,
+    formState: { errors, isSubmitting }
   } = useForm<StudentFormData>({
-    resolver: zodResolver(studentSchema)
+    resolver: zodResolver(studentSchema),
+    defaultValues: {
+      supportType: [],
+      travelMode: [],
+      travelPreference: []
+    }
   });
+
+  const watchedSupportTypes = watch('supportType') || [];
 
   const onSubmit = async (_data: StudentFormData) => {
     try {
@@ -90,10 +102,34 @@ const StudentSignup: React.FC = () => {
   ];
 
   const supportTypes = [
-    { id: 'travel', label: 'Travel & Stay Guidance', description: 'Routes, accommodation, local tips' },
-    { id: 'examday', label: 'Exam Day Support', description: 'Morning support, directions, moral support' },
-    { id: 'strategy', label: 'Exam Strategy Session', description: 'Mindset, confidence building, study tips' }
+    { id: 'travel', label: 'Travel Guidance', description: 'Help with routes, local tips' },
+    { id: 'examday', label: 'Travel & Stay guidance', description: 'Help with routes, accomodation and local tips in one place!' },
+    { id: 'strategy', label: 'Travel+ Stay+ Exam-Strategy', description: 'Mindset, confidence building, study tipsroutes, accomodation and local tips everything at your fingertips!' }
   ];
+
+  const hotelPriceRanges = [
+    { value: 'budget', label: 'Budget (₹500-₹1,500/night)', description: 'Basic accommodation with essential amenities' },
+    { value: 'mid-range', label: 'Mid-Range (₹1,500-₹3,500/night)', description: 'Comfortable stay with good amenities' },
+    { value: 'premium', label: 'Premium (₹3,500-₹7,000/night)', description: 'Luxury accommodation with premium services' },
+    { value: 'luxury', label: 'Luxury (₹7,000+/night)', description: 'High-end hotels with exceptional services' }
+  ];
+
+  const travelModes = [
+    { id: 'bus', label: 'Bus', description: 'Economical travel option' },
+    { id: 'train', label: 'Train', description: 'Comfortable and reliable' },
+    { id: 'airways', label: 'Airways', description: 'Fastest travel option' }
+  ];
+
+  const travelPreferences = [
+    { id: 'shared-transport', label: 'Shared Transportation', description: 'Share taxi, cab, or private vehicle to exam center' },
+    { id: 'public-transport', label: 'Public Transport', description: 'Travel together via bus, train, or metro' },
+    { id: 'early-departure', label: 'Early Departure', description: 'Prefer to leave early to avoid rush and reach on time' },
+    { id: 'safety-companion', label: 'Safety Companion', description: 'Travel together for safety, especially for early morning exams' },
+    { id: 'cost-sharing', label: 'Cost Sharing', description: 'Share travel expenses like taxi fare or fuel costs' }
+  ];
+
+  // Check if exam day support or strategy session is selected
+  const needsTravelInfo = watchedSupportTypes?.includes('examday') || watchedSupportTypes?.includes('strategy');
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -177,7 +213,7 @@ const StudentSignup: React.FC = () => {
                   Exam Details
                 </h2>
                 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label htmlFor="examType" className="block text-sm font-medium text-slate-700 mb-2">
                       Exam Type *
@@ -227,6 +263,22 @@ const StudentSignup: React.FC = () => {
                       <p className="mt-1 text-sm text-red-600">{errors.examDate.message}</p>
                     )}
                   </div>
+
+                  <div>
+                    <label htmlFor="examCenterAddress" className="block text-sm font-medium text-slate-700 mb-2">
+                      Exam Center Address *
+                    </label>
+                    <input
+                      {...register('examCenterAddress')}
+                      type="text"
+                      id="examCenterAddress"
+                      className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors"
+                      placeholder="e.g., ABC College, 123 Main Street, Sector 15"
+                    />
+                    {errors.examCenterAddress && (
+                      <p className="mt-1 text-sm text-red-600">{errors.examCenterAddress.message}</p>
+                    )}
+                  </div>
                 </div>
               </div>
 
@@ -261,6 +313,113 @@ const StudentSignup: React.FC = () => {
                   <p className="mt-2 text-sm text-red-600">{errors.supportType.message}</p>
                 )}
               </div>
+
+              {/* Conditional Travel Information */}
+              {needsTravelInfo && (
+                <>
+                  {/* Hotel Price Range */}
+                  <div>
+                    <h2 className="text-xl font-semibold text-slate-900 mb-6 flex items-center">
+                      <Home className="h-5 w-5 mr-2 text-emerald-600" />
+                      Accommodation Preference
+                    </h2>
+                    
+                    <div>
+                      <label className="block text-sm font-medium text-slate-700 mb-4">
+                        Hotel Price Range (Optional)
+                      </label>
+                      <div className="space-y-3">
+                        {hotelPriceRanges.map(range => (
+                          <label key={range.value} className="flex items-start space-x-3 p-4 border border-slate-200 rounded-lg hover:bg-slate-50 cursor-pointer transition-colors">
+                            <input
+                              {...register('hotelPriceRange')}
+                              type="radio"
+                              value={range.value}
+                              className="mt-1 h-4 w-4 text-emerald-600 focus:ring-emerald-500 border-slate-300"
+                            />
+                            <div>
+                              <div className="font-medium text-slate-900">
+                                {range.label}
+                              </div>
+                              <div className="text-sm text-slate-600">
+                                {range.description}
+                              </div>
+                            </div>
+                          </label>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Travel Mode */}
+                  <div>
+                    <h2 className="text-xl font-semibold text-slate-900 mb-6 flex items-center">
+                      <Plane className="h-5 w-5 mr-2 text-emerald-600" />
+                      Travel Mode
+                    </h2>
+                    
+                    <div>
+                      <label className="block text-sm font-medium text-slate-700 mb-4">
+                        Preferred Travel Mode (Optional)
+                      </label>
+                      <div className="space-y-3">
+                        {travelModes.map(mode => (
+                          <label key={mode.id} className="flex items-start space-x-3 p-4 border border-slate-200 rounded-lg hover:bg-slate-50 cursor-pointer transition-colors">
+                            <input
+                              {...register('travelMode')}
+                              type="checkbox"
+                              value={mode.id}
+                              className="mt-1 h-4 w-4 text-emerald-600 focus:ring-emerald-500 border-slate-300 rounded"
+                            />
+                            <div>
+                              <div className="font-medium text-slate-900">
+                                {mode.label}
+                              </div>
+                              <div className="text-sm text-slate-600">
+                                {mode.description}
+                              </div>
+                            </div>
+                          </label>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Travel Preferences */}
+                  <div>
+                    <h2 className="text-xl font-semibold text-slate-900 mb-6 flex items-center">
+                      <MapPin className="h-5 w-5 mr-2 text-emerald-600" />
+                      Travel Preferences
+                    </h2>
+                    
+                    <div>
+                      <label className="block text-sm font-medium text-slate-700 mb-4">
+                        How would you like to travel? (Optional)
+                      </label>
+                      <div className="space-y-3">
+                        {travelPreferences.map(preference => (
+                          <label key={preference.id} className="flex items-start space-x-3 p-4 border border-slate-200 rounded-lg hover:bg-slate-50 cursor-pointer transition-colors">
+                            <input
+                              {...register('travelPreference')}
+                              type="checkbox"
+                              value={preference.id}
+                              className="mt-1 h-4 w-4 text-emerald-600 focus:ring-emerald-500 border-slate-300 rounded"
+                            />
+                            <div>
+                              <div className="font-medium text-slate-900">
+                                {preference.label}
+                              </div>
+                              <div className="text-sm text-slate-600">
+                                {preference.description}
+                              </div>
+                            </div>
+                          </label>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </>
+              )}
 
               {/* Additional Information */}
               <div>

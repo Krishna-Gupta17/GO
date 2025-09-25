@@ -2,7 +2,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { ArrowRight, Users, Heart, MapPin, BookOpen } from 'lucide-react';
+import { ArrowRight, Users, Heart, MapPin, BookOpen, Home } from 'lucide-react';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
@@ -21,6 +21,7 @@ const journeySchema = z.object({
     required_error: 'Please select your travel companion preference'
   }),
   travelPreference: z.array(z.string()).min(1, 'Please select at least one travel preference'),
+  accommodationPreference: z.array(z.string()).optional(),
   additionalInfo: z.string().optional()
 });
 
@@ -63,6 +64,15 @@ const JourneyTogether: React.FC = () => {
     // { id: 'moral-support', label: 'Moral Support', description: 'Provide emotional support and encouragement during travel' },
     { id: 'safety-companion', label: 'Safety Companion', description: 'Travel together for safety, especially for early morning exams' },
     { id: 'cost-sharing', label: 'Cost Sharing', description: 'Share travel expenses like taxi fare or fuel costs' }
+  ];
+
+  const accommodationPreferences = [
+    { id: 'budget', label: 'Budget Hotels (₹500-₹1,500/night)', description: 'Basic accommodation with essential amenities' },
+    { id: 'mid-range', label: 'Mid-Range Hotels (₹1,500-₹3,500/night)', description: 'Comfortable stay with good amenities' },
+    { id: 'premium', label: 'Premium Hotels (₹3,500-₹7,000/night)', description: 'Luxury accommodation with premium services' },
+    { id: 'shared-room', label: 'Shared Room', description: 'Share accommodation costs with fellow travelers' },
+    { id: 'near-center', label: 'Near Exam Center', description: 'Prefer accommodation close to the exam venue' },
+    { id: 'transport-access', label: 'Good Transport Access', description: 'Easy access to public transportation' }
   ];
 
   const examDates = [
@@ -340,6 +350,43 @@ const JourneyTogether: React.FC = () => {
                 {errors.travelPreference && (
                   <p className="mt-2 text-sm text-red-600">{errors.travelPreference.message}</p>
                 )}
+              </div>
+
+              {/* Accommodation Preferences */}
+              <div>
+                <h2 className="text-xl font-semibold text-slate-900 mb-6 flex items-center" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+                  <Home className="h-5 w-5 mr-2 text-emerald-600" />
+                  Accommodation Preferences
+                </h2>
+                
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-4">
+                    Hotel & Stay Preferences (Optional)
+                  </label>
+                  <div className="space-y-4">
+                    {accommodationPreferences.map(preference => (
+                      <label key={preference.id} className="flex items-start space-x-3 p-4 border border-slate-200 rounded-lg hover:bg-slate-50 cursor-pointer transition-colors">
+                        <input
+                          {...register('accommodationPreference')}
+                          type="checkbox"
+                          value={preference.id}
+                          className="mt-1 h-4 w-4 text-emerald-600 focus:ring-emerald-500 border-slate-300 rounded"
+                        />
+                        <div>
+                          <div className="font-medium text-slate-900" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+                            {preference.label}
+                          </div>
+                          <div className="text-sm text-slate-600" style={{ fontFamily: 'Lato, sans-serif' }}>
+                            {preference.description}
+                          </div>
+                        </div>
+                      </label>
+                    ))}
+                  </div>
+                  {errors.accommodationPreference && (
+                    <p className="mt-2 text-sm text-red-600">{errors.accommodationPreference.message}</p>
+                  )}
+                </div>
               </div>
 
               {/* Additional Information */}
