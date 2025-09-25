@@ -37,8 +37,41 @@ const SuccessStories: React.FC = () => {
   ];
 
   return (
-    <section className="py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="relative overflow-hidden py-20 bg-white">
+      {/* 🎨 Gradient Ribbon Animation */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {/* Ribbon 1 */}
+        <motion.div
+          className="absolute w-[200%] h-[200%] bg-gradient-to-r from-emerald-200 via-sky-200 to-yellow-200 opacity-20 rounded-full"
+          style={{ top: "-30%", left: "-50%" }}
+          animate={{
+            rotate: [0, 360],
+            scale: [1, 1.05, 1],
+          }}
+          transition={{
+            duration: 120,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+        />
+        {/* Ribbon 2 */}
+        <motion.div
+          className="absolute w-[200%] h-[200%] bg-gradient-to-r from-sky-300 via-emerald-100 to-yellow-100 opacity-15 rounded-full"
+          style={{ top: "-20%", left: "-60%" }}
+          animate={{
+            rotate: [360, 0],
+            scale: [1, 1.03, 1],
+          }}
+          transition={{
+            duration: 140,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+        />
+      </div>
+
+      {/* 🌟 Main Content */}
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -54,7 +87,7 @@ const SuccessStories: React.FC = () => {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
           {stories.map((story, index) => (
             <motion.div
               key={story.id}
@@ -65,17 +98,14 @@ const SuccessStories: React.FC = () => {
               className="bg-gradient-to-br from-emerald-50 to-sky-50 p-8 rounded-2xl shadow-sm hover:shadow-md transition-shadow"
             >
               <Quote className="h-8 w-8 text-emerald-600 mb-4" />
-              
               <p className="text-slate-700 mb-6 leading-relaxed" style={{ fontFamily: 'Lato, sans-serif' }}>
                 "{story.story}"
               </p>
-
               <div className="flex items-center mb-4">
                 {[...Array(story.rating)].map((_, i) => (
                   <Star key={i} className="h-4 w-4 text-yellow-400 fill-current" />
                 ))}
               </div>
-
               <div className="flex items-center mb-4">
                 <img
                   src={story.image}
@@ -92,7 +122,6 @@ const SuccessStories: React.FC = () => {
                   </p>
                 </div>
               </div>
-
               <div className="bg-white px-3 py-2 rounded-lg">
                 <p className="text-xs text-emerald-600 font-medium" style={{ fontFamily: 'Lato, sans-serif' }}>
                   {story.mentorHelp}
