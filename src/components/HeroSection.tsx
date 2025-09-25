@@ -125,7 +125,7 @@ const HeroSection: React.FC = () => {
             className="relative"
           >
             <img
-              src="public/freepik__a-natural-candid-photograph-showing-a-group-of-stu__46304.png"
+              src="/freepik__a-natural-candid-photograph-showing-a-group-of-stu__46304.png"
               alt="Students studying together in a supportive environment"
               className="rounded-2xl shadow-2xl w-full h-96 object-cover"
               loading="lazy"
