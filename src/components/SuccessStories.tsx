@@ -9,30 +9,30 @@ const SuccessStories: React.FC = () => {
       name: "Rahul Kumar",
       exam: "JEE Advanced",
       city: "Delhi",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80",
+      image: "public/WhatsApp Image 2025-09-25 at 12.39.37_c09f671b.jpg",
       story: "My mentor helped me navigate Delhi's metro system and found a quiet place near the exam center for last-minute revision. Her calm presence on exam morning made all the difference!",
-      rating: 5,
-      mentorHelp: "Travel guidance & Exam day support"
+      rating: 4,
+      mentorHelp: "Travel & Stay support"
     },
     {
       id: 2,
       name: "Sneha Patel",
       exam: "NEET",
       city: "Pune",
-      image: "https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80",
+      image: "public/WhatsApp Image 2025-09-25 at 12.52.42_26f61157.jpg",
       story: "I was so nervous about traveling alone to Pune. My mentor not only guided me to safe accommodation but also shared his exam strategies. I felt like I had a big brother looking out for me.",
-      rating: 5,
-      mentorHelp: "Travel & stay + Strategy session"
+      rating: 4,
+      mentorHelp: "Travel + stay + Strategy session"
     },
     {
       id: 3,
       name: "Arjun Singh",
       exam: "CAT",
       city: "Bangalore",
-      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80",
+      image: "public/WhatsApp Image 2025-09-25 at 12.42.08_786f7f8d.jpg",
       story: "The traffic in Bangalore was my biggest worry. My mentor shared the perfect route and timing. She even recommended a great breakfast place that kept me energized throughout the exam!",
       rating: 5,
-      mentorHelp: "Local travel tips & Morning support"
+      mentorHelp: "Local travel tips & Exam strategy"
     }
   ];
 
