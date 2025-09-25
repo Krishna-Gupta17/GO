@@ -23,6 +23,9 @@ const Header: React.FC = () => {
             <Link to="/become-mentor" className="text-slate-700 hover:text-emerald-600 transition-colors">
               Become Mentor
             </Link>
+            <Link to="/journey-together" className="text-slate-700 hover:text-emerald-600 transition-colors">
+              Journey Together
+            </Link>
             <Link to="/student-signup" className="bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors">
               Get Started
             </Link>
@@ -45,6 +48,9 @@ const Header: React.FC = () => {
               </Link>
               <Link to="/become-mentor" className="text-slate-700 hover:text-emerald-600 transition-colors">
                 Become Mentor
+              </Link>
+              <Link to="/journey-together" className="text-slate-700 hover:text-emerald-600 transition-colors">
+                Journey Together
               </Link>
               <Link to="/student-signup" className="bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors inline-block text-center">
                 Get Started

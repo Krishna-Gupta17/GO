@@ -9,6 +9,7 @@ import Home from './src/pages/Home';
 import StudentSignup from './src/pages/StudentSignup';
 import FindMentor from './src/pages/FindMentor';
 import BecomeMentor from './src/pages/BecomeMentor';
+import JourneyTogether from './src/pages/JourneyTogether';
 import BookSession from './src/pages/BookSession';
 import NotFound from './src/pages/NotFound';
 
@@ -22,6 +23,7 @@ const App: React.FC = () => {
             <Route path="/student-signup" element={<StudentSignup />} />
             <Route path="/find-mentor" element={<FindMentor />} />
             <Route path="/become-mentor" element={<BecomeMentor />} />
+            <Route path="/journey-together" element={<JourneyTogether />} />
             <Route path="/mentor/:id/book" element={<BookSession />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
