@@ -10,7 +10,7 @@ const SuccessStories: React.FC = () => {
       exam: "JEE Advanced",
       city: "Delhi",
       image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80",
-      story: "My mentor Anjali helped me navigate Delhi's metro system and found a quiet place near the exam center for last-minute revision. Her calm presence on exam morning made all the difference!",
+      story: "My mentor helped me navigate Delhi's metro system and found a quiet place near the exam center for last-minute revision. Her calm presence on exam morning made all the difference!",
       rating: 5,
       mentorHelp: "Travel guidance & Exam day support"
     },
@@ -20,7 +20,7 @@ const SuccessStories: React.FC = () => {
       exam: "NEET",
       city: "Pune",
       image: "https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80",
-      story: "I was so nervous about traveling alone to Pune. My mentor Vikram not only guided me to safe accommodation but also shared his exam strategies. I felt like I had a big brother looking out for me.",
+      story: "I was so nervous about traveling alone to Pune. My mentor not only guided me to safe accommodation but also shared his exam strategies. I felt like I had a big brother looking out for me.",
       rating: 5,
       mentorHelp: "Travel & stay + Strategy session"
     },
@@ -30,7 +30,7 @@ const SuccessStories: React.FC = () => {
       exam: "CAT",
       city: "Bangalore",
       image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80",
-      story: "The traffic in Bangalore was my biggest worry. My mentor Kavya shared the perfect route and timing. She even recommended a great breakfast place that kept me energized throughout the exam!",
+      story: "The traffic in Bangalore was my biggest worry. My mentor shared the perfect route and timing. She even recommended a great breakfast place that kept me energized throughout the exam!",
       rating: 5,
       mentorHelp: "Local travel tips & Morning support"
     }
