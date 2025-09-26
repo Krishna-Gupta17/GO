@@ -73,7 +73,7 @@ const HowItWorks: React.FC = () => {
           className="text-center mb-16"
         >
           <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 mb-4" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-            How ExamMentor Works
+            How ExamGuide Works
           </h2>
           <p className="text-xl text-slate-600 max-w-3xl mx-auto" style={{ fontFamily: 'Lato, sans-serif' }}>
             Getting support for your exam journey is simple. Connect with mentors who understand exactly what you're going through.
