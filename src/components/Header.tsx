@@ -27,8 +27,8 @@ const Header: React.FC = () => {
   }, [location.pathname]);
 
   const navItems = [
-    { to: '/find-mentor', label: 'Find Mentor' },
-    { to: '/become-mentor', label: 'Become Mentor' },
+    { to: '/find-mentor', label: 'Find Guide' },
+    { to: '/become-mentor', label: 'Become Guide' },
     { to: '/journey-together', label: 'Journey Together' },
     { to: '/journey-tracker', label: 'Journey Tracker' }
   ];
