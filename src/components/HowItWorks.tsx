@@ -64,7 +64,7 @@ const HowItWorks: React.FC = () => {
       </div>
 
       {/* 🌟 Main Content */}
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
+  <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -72,15 +72,15 @@ const HowItWorks: React.FC = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 mb-4" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+          <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 mb-4 break-words" style={{ fontFamily: 'Montserrat, sans-serif' }}>
             How ExamGuide Works
           </h2>
-          <p className="text-xl text-slate-600 max-w-3xl mx-auto" style={{ fontFamily: 'Lato, sans-serif' }}>
+          <p className="text-xl text-slate-600 max-w-3xl mx-auto break-words hyphens-auto leading-relaxed" style={{ fontFamily: 'Lato, sans-serif', wordBreak: 'break-word', overflowWrap: 'anywhere' }}>
             Getting support for your exam journey is simple. Connect with guides who understand exactly what you're going through.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 relative z-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 relative z-10">
           {steps.map((step, index) => {
             const IconComponent = step.icon;
             return (
@@ -90,15 +90,15 @@ const HowItWorks: React.FC = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="text-center"
+                className="text-center flex flex-col items-center h-full"
               >
-                <div className="bg-white w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-sm">
+                <div className="bg-white w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-sm shrink-0">
                   <IconComponent className="h-8 w-8 text-emerald-600" />
                 </div>
-                <h3 className="text-xl font-semibold text-slate-900 mb-4" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+                <h3 className="text-xl font-semibold text-slate-900 mb-3 px-2 break-words" style={{ fontFamily: 'Montserrat, sans-serif', wordBreak: 'break-word', overflowWrap: 'anywhere' }}>
                   {step.title}
                 </h3>
-                <p className="text-slate-600 leading-relaxed" style={{ fontFamily: 'Lato, sans-serif' }}>
+                <p className="text-slate-600 leading-relaxed px-3 pb-2 text-sm sm:text-base break-words hyphens-auto" style={{ fontFamily: 'Lato, sans-serif', wordBreak: 'break-word', overflowWrap: 'anywhere' }}>
                   {step.description}
                 </p>
               </motion.div>
