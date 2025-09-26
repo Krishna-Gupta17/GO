@@ -35,7 +35,7 @@ const Footer: React.FC = () => {
               For Students
             </h3>
             <ul className="space-y-2 text-slate-300" style={{ fontFamily: 'Lato, sans-serif' }}>
-              <li><a href="#" className="hover:text-emerald-400 transition-colors">Find a Mentor</a></li>
+              <li><a href="#" className="hover:text-emerald-400 transition-colors">Find a Guide</a></li>
               <li><a href="#" className="hover:text-emerald-400 transition-colors">How it Works</a></li>
               <li><a href="#" className="hover:text-emerald-400 transition-colors">Success Stories</a></li>
             </ul>
@@ -43,11 +43,11 @@ const Footer: React.FC = () => {
 
           <div>
             <h3 className="font-semibold mb-4" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-              For Mentors
+              For Guides
             </h3>
             <ul className="space-y-2 text-slate-300" style={{ fontFamily: 'Lato, sans-serif' }}>
-              <li><a href="#" className="hover:text-emerald-400 transition-colors">Become a Mentor</a></li>
-              <li><a href="#" className="hover:text-emerald-400 transition-colors">Mentor Guidelines</a></li>
+              <li><a href="#" className="hover:text-emerald-400 transition-colors">Become a Guide</a></li>
+              <li><a href="#" className="hover:text-emerald-400 transition-colors">Guide Instructions</a></li>
               <li><a href="#" className="hover:text-emerald-400 transition-colors">Community</a></li>
             </ul>
           </div>

@@ -87,14 +87,14 @@ const HeroSection: React.FC = () => {
                 to="/student-signup"
                 className="bg-emerald-600 text-white px-8 py-4 rounded-lg hover:bg-emerald-700 transition-colors flex items-center justify-center group"
               >
-                Find a Local Mentor
+                Find a Local Guide
                 <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </Link>
               <Link
                 to="/become-mentor"
                 className="border-2 border-emerald-600 text-emerald-600 px-8 py-4 rounded-lg hover:bg-emerald-600 hover:text-white transition-colors flex items-center justify-center"
               >
-                Become a Mentor
+                Become a Guide
               </Link>
             </div>
 

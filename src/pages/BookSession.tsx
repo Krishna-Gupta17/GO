@@ -92,7 +92,7 @@ const BookSession: React.FC = () => {
                 Session Booked Successfully!
               </h1>
               <p className="text-xl text-slate-600 mb-8" style={{ fontFamily: 'Lato, sans-serif' }}>
-                Your mentor will contact you soon with all the details. Get ready for a stress-free exam experience!
+                Your guide will contact you soon with all the details. Get ready for a stress-free exam experience!
               </p>
               
               <div className="bg-emerald-50 p-6 rounded-xl mb-8">
@@ -100,7 +100,7 @@ const BookSession: React.FC = () => {
                   Session Details
                 </h3>
                 <div className="text-left space-y-2">
-                  <p><strong>Mentor ID:</strong> {id}</p>
+                  <p><strong>Guide ID:</strong> {id}</p>
                   <p><strong>Session Type:</strong> {selectedSessionType?.label}</p>
                   <p><strong>Date:</strong> {bookingData.date}</p>
                   <p><strong>Time:</strong> {bookingData.time}</p>
@@ -143,7 +143,7 @@ const BookSession: React.FC = () => {
               Book Your Session
             </h1>
             <p className="text-xl text-slate-600 max-w-2xl mx-auto" style={{ fontFamily: 'Lato, sans-serif' }}>
-              Schedule your mentoring session and complete the secure payment to get started.
+              Schedule your guiding session and complete the secure payment to get started.
             </p>
           </div>
 
@@ -379,7 +379,7 @@ const BookSession: React.FC = () => {
                 
                 <div className="space-y-4">
                   <div className="flex justify-between">
-                    <span className="text-slate-600">Mentor ID:</span>
+                    <span className="text-slate-600">Guide ID:</span>
                     <span className="font-medium">{id}</span>
                   </div>
                   

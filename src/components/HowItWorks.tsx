@@ -17,12 +17,12 @@ const HowItWorks: React.FC = () => {
     {
       icon: Calendar,
       title: "Book Support",
-      description: "Schedule your mentoring sessions - pre-exam travel planning . Choose what works for you."
+      description: "Schedule your guiding sessions - pre-exam travel planning . Choose what works for you."
     },
     {
       icon: Heart,
       title: "Succeed Together",
-      description: "Get personalized guidance, feel supported, and ace your exam. Then consider becoming a mentor to help the next student!"
+      description: "Get personalized guidance, feel supported, and ace your exam. Then consider becoming a guide to help the next student!"
     }
   ];
 

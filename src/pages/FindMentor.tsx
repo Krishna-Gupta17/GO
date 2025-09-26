@@ -18,7 +18,7 @@ const FindMentor: React.FC = () => {
       city: "Delhi",
       exams: ["JEE Main", "JEE Advanced"],
       year: "2024",
-      tags: ["Calm mentor", "Local transport expert", "Knows safe eateries"],
+      tags: [ "Local transport expert", "Knows safe eateries"],
       intro: "I understand exam stress! I'll help you navigate Delhi like a local and keep you calm on exam day.",
       verified: true,
       responseTime: "2 hours",
@@ -163,7 +163,7 @@ const FindMentor: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h1 className="text-3xl lg:text-4xl font-bold text-slate-900 mb-4" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-              Find Your Perfect Mentor
+              Find Your Perfect Guide
             </h1>
             <p className="text-xl text-slate-600 max-w-3xl mx-auto" style={{ fontFamily: 'Lato, sans-serif' }}>
               Connect with experienced guides who've successfully navigated exams in your city. Get personalized guidance and support.
@@ -175,7 +175,7 @@ const FindMentor: React.FC = () => {
             <div className="flex items-center mb-4">
               <Filter className="h-5 w-5 text-emerald-600 mr-2" />
               <h2 className="text-lg font-semibold text-slate-900" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-                Filter Mentors
+                Filter Guides
               </h2>
             </div>
             

@@ -10,7 +10,7 @@ const SuccessStories: React.FC = () => {
       exam: "JEE Advanced",
       city: "Delhi",
       image: "/WhatsApp Image 2025-09-25 at 12.39.37_c09f671b.jpg",
-      story: "My mentor helped me navigate Delhi's metro system and found a quiet place near the exam center for last-minute revision. Her calm presence on exam morning made all the difference!",
+      story: "My guide helped me navigate Delhi's metro system and found a quiet place near the exam center for last-minute revision. Her calm presence on exam morning made all the difference!",
       rating: 4,
       mentorHelp: "Travel & Stay support"
     },
@@ -20,7 +20,7 @@ const SuccessStories: React.FC = () => {
       exam: "NEET",
       city: "Pune",
       image: "/WhatsApp Image 2025-09-25 at 12.52.42_26f61157.jpg",
-      story: "I was so nervous about traveling alone to Pune. My mentor not only guided me to safe accommodation but also shared his exam strategies. I felt like I had a big brother looking out for me.",
+      story: "I was so nervous about traveling alone to Pune. My guide not only guided me to safe accommodation but also shared his exam strategies. I felt like I had a big brother looking out for me.",
       rating: 4,
       mentorHelp: "Travel + stay + Strategy session"
     },
@@ -30,7 +30,7 @@ const SuccessStories: React.FC = () => {
       exam: "CAT",
       city: "Bangalore",
       image: "/WhatsApp Image 2025-09-25 at 12.42.08_786f7f8d.jpg",
-      story: "The traffic in Bangalore was my biggest worry. My mentor shared the perfect route and timing. She even recommended a great breakfast place that kept me energized throughout the exam!",
+      story: "The traffic in Bangalore was my biggest worry. My guide shared the perfect route and timing. She even recommended a great breakfast place that kept me energized throughout the exam!",
       rating: 5,
       mentorHelp: "Local travel tips & Exam strategy"
     }
@@ -83,7 +83,7 @@ const SuccessStories: React.FC = () => {
             Success Stories from Our Community
           </h2>
           <p className="text-xl text-slate-600 max-w-3xl mx-auto" style={{ fontFamily: 'Lato, sans-serif' }}>
-            Real experiences from students who found support, guidance, and friendship through our mentor network.
+            Real experiences from students who found support, guidance, and friendship through our guide network.
           </p>
         </motion.div>
 

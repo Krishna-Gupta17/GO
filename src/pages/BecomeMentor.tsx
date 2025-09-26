@@ -55,7 +55,7 @@ const BecomeMentor: React.FC = () => {
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));
       
-      toast.success('Mentor registration successful! We\'ll review your application and get back to you soon.');
+      toast.success('Guide registration successful! We\'ll review your application and get back to you soon.');
       setTimeout(() => {
         navigate('/');
       }, 2000);
@@ -85,7 +85,7 @@ const BecomeMentor: React.FC = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h1 className="text-3xl lg:text-4xl font-bold text-slate-900 mb-4" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-              Become a Mentor
+              Become a Guide
             </h1>
             <p className="text-xl text-slate-600 max-w-2xl mx-auto" style={{ fontFamily: 'Lato, sans-serif' }}>
               Share your exam success story and help students navigate their own journeys. Join our community of supportive guides.
@@ -308,14 +308,14 @@ const BecomeMentor: React.FC = () => {
                 
                 <div>
                   <label htmlFor="availability" className="block text-sm font-medium text-slate-700 mb-2">
-                    When are you available to mentor? *
+                    When are you available to guide? *
                   </label>
                   <textarea
                     {...register('availability')}
                     id="availability"
                     rows={4}
                     className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors"
-                    placeholder="When are you available to mentor? (e.g., weekends, evenings, exam seasons only...)"
+                    placeholder="When are you available to guide? (e.g., weekends, evenings, exam seasons only...)"
                   />
                   {errors.availability && (
                     <p className="mt-1 text-sm text-red-600">{errors.availability.message}</p>
@@ -420,7 +420,7 @@ const BecomeMentor: React.FC = () => {
                   disabled={isSubmitting}
                   className="bg-emerald-600 text-white px-8 py-4 rounded-lg hover:bg-emerald-700 transition-colors flex items-center disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {isSubmitting ? 'Submitting...' : 'Become a Mentor'}
+                  {isSubmitting ? 'Submitting...' : 'Become a Guide'}
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </button>
               </div>

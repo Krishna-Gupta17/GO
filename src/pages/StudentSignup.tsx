@@ -139,7 +139,7 @@ const StudentSignup: React.FC = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h1 className="text-3xl lg:text-4xl font-bold text-slate-900 mb-4">
-              Find Your Perfect Mentor
+              Find Your Perfect Guide
             </h1>
             <p className="text-xl text-slate-600 max-w-2xl mx-auto">
               Tell us about your exam and what support you need. We'll connect you with experienced guide in your city.
@@ -441,7 +441,7 @@ const StudentSignup: React.FC = () => {
                   disabled={isSubmitting}
                   className="bg-emerald-600 text-white px-8 py-4 rounded-lg hover:bg-emerald-700 transition-colors flex items-center disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {isSubmitting ? 'Finding Mentors...' : 'Find My Mentors'}
+                  {isSubmitting ? 'Finding Guides...' : 'Find My Guides'}
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </button>
               </div>
