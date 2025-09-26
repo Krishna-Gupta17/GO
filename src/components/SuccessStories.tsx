@@ -9,7 +9,7 @@ const SuccessStories: React.FC = () => {
       name: "Rahul Kumar",
       exam: "JEE Advanced",
       city: "Delhi",
-      image: "public/WhatsApp Image 2025-09-25 at 12.39.37_c09f671b.jpg",
+      image: "/WhatsApp Image 2025-09-25 at 12.39.37_c09f671b.jpg",
       story: "My mentor helped me navigate Delhi's metro system and found a quiet place near the exam center for last-minute revision. Her calm presence on exam morning made all the difference!",
       rating: 4,
       mentorHelp: "Travel & Stay support"
@@ -19,7 +19,7 @@ const SuccessStories: React.FC = () => {
       name: "Sneha Patel",
       exam: "NEET",
       city: "Pune",
-      image: "public/WhatsApp Image 2025-09-25 at 12.52.42_26f61157.jpg",
+      image: "/WhatsApp Image 2025-09-25 at 12.52.42_26f61157.jpg",
       story: "I was so nervous about traveling alone to Pune. My mentor not only guided me to safe accommodation but also shared his exam strategies. I felt like I had a big brother looking out for me.",
       rating: 4,
       mentorHelp: "Travel + stay + Strategy session"
@@ -29,7 +29,7 @@ const SuccessStories: React.FC = () => {
       name: "Arjun Singh",
       exam: "CAT",
       city: "Bangalore",
-      image: "public/WhatsApp Image 2025-09-25 at 12.42.08_786f7f8d.jpg",
+      image: "/WhatsApp Image 2025-09-25 at 12.42.08_786f7f8d.jpg",
       story: "The traffic in Bangalore was my biggest worry. My mentor shared the perfect route and timing. She even recommended a great breakfast place that kept me energized throughout the exam!",
       rating: 5,
       mentorHelp: "Local travel tips & Exam strategy"
