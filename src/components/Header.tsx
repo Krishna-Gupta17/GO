@@ -29,7 +29,8 @@ const Header: React.FC = () => {
   const navItems = [
     { to: '/find-mentor', label: 'Find Mentor' },
     { to: '/become-mentor', label: 'Become Mentor' },
-    { to: '/journey-together', label: 'Journey Together' }
+    { to: '/journey-together', label: 'Journey Together' },
+    { to: '/journey-tracker', label: 'Journey Tracker' }
   ];
 
   const isActive = (path: string) => location.pathname === path;
@@ -100,6 +101,8 @@ const Header: React.FC = () => {
               <span className="relative z-10">Get Started</span>
               <span className="absolute inset-0 opacity-0 hover:opacity-100 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.25),transparent_60%)] transition-opacity duration-500" />
             </Link>
+
+            
           </nav>
 
           <button
