@@ -88,7 +88,7 @@ const BecomeMentor: React.FC = () => {
               Become a Mentor
             </h1>
             <p className="text-xl text-slate-600 max-w-2xl mx-auto" style={{ fontFamily: 'Lato, sans-serif' }}>
-              Share your exam success story and help students navigate their own journeys. Join our community of supportive mentors.
+              Share your exam success story and help students navigate their own journeys. Join our community of supportive guides.
             </p>
           </div>
 

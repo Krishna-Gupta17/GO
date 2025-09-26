@@ -10,11 +10,11 @@ const Footer: React.FC = () => {
             <div className="flex items-center space-x-2 mb-4">
               <Heart className="h-8 w-8 text-emerald-400" />
               <span className="text-xl font-bold" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-                ExamGo
+                Examido
               </span>
             </div>
             <p className="text-slate-300 mb-4" style={{ fontFamily: 'Lato, sans-serif' }}>
-              Connecting students with experienced mentors for stress-free exam experiences. 
+              Connecting students with experienced guides for stress-free exam experiences. 
               Building a supportive community where everyone succeeds together.
             </p>
             <div className="flex space-x-4">
@@ -55,7 +55,7 @@ const Footer: React.FC = () => {
 
         <div className="border-t border-slate-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-slate-400 text-sm" style={{ fontFamily: 'Lato, sans-serif' }}>
-            © 2025 ExamGo. All rights reserved.
+            © 2025 Examido. All rights reserved.
           </p>
           {/* <p className="text-slate-400 text-sm mt-2 md:mt-0" style={{ fontFamily: 'Lato, sans-serif' }}>
             Built with ❤️ by <a rel="nofollow" target="_blank" href="https://meku.dev" className="text-emerald-400 hover:text-emerald-300 transition-colors">Meku.dev</a>

@@ -77,7 +77,7 @@ const HeroSection: React.FC = () => {
               className="text-xl text-slate-600 mb-8 leading-relaxed"
               style={{ fontFamily: 'Lato, sans-serif' }}
             >
-              "Connect with experienced mentors who've been where you're going.
+              "Connect with experienced guides who've been where you're going.
               Get personalized guidance for exam travel, accommodation, and
               day-of support from a caring community"
             </p>

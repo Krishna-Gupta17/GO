@@ -88,7 +88,7 @@ const StudentSignup: React.FC = () => {
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));
       
-      toast.success('Registration successful! Redirecting to find mentors...');
+      toast.success('Registration successful! Redirecting to find Guide...');
       setTimeout(() => {
         navigate('/find-mentor');
       }, 2000);
@@ -142,7 +142,7 @@ const StudentSignup: React.FC = () => {
               Find Your Perfect Mentor
             </h1>
             <p className="text-xl text-slate-600 max-w-2xl mx-auto">
-              Tell us about your exam and what support you need. We'll connect you with experienced mentors in your city.
+              Tell us about your exam and what support you need. We'll connect you with experienced guide in your city.
             </p>
           </div>
 
@@ -431,7 +431,7 @@ const StudentSignup: React.FC = () => {
                   id="additionalInfo"
                   rows={4}
                   className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors"
-                  placeholder="Any specific concerns, requirements, or questions you'd like to share with potential mentors..."
+                  placeholder="Any specific concerns, requirements, or questions you'd like to share with potential Guide..."
                 />
               </div>
 

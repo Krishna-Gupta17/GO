@@ -58,7 +58,7 @@ const Header: React.FC = () => {
               className="text-xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-emerald-600 to-emerald-500"
               style={{ fontFamily: 'Montserrat, sans-serif' }}
             >
-              ExamGo
+              Examido
             </span>
           </Link>
 

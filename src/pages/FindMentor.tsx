@@ -166,7 +166,7 @@ const FindMentor: React.FC = () => {
               Find Your Perfect Mentor
             </h1>
             <p className="text-xl text-slate-600 max-w-3xl mx-auto" style={{ fontFamily: 'Lato, sans-serif' }}>
-              Connect with experienced mentors who've successfully navigated exams in your city. Get personalized guidance and support.
+              Connect with experienced guides who've successfully navigated exams in your city. Get personalized guidance and support.
             </p>
           </div>
 
@@ -296,7 +296,7 @@ const FindMentor: React.FC = () => {
           {filteredMentors.length === 0 && (
             <div className="text-center py-12">
               <p className="text-slate-600 text-lg" style={{ fontFamily: 'Lato, sans-serif' }}>
-                No mentors found for your selected filters. Try adjusting your search criteria.
+                No Guides found for your selected filters. Try adjusting your search criteria.
               </p>
             </div>
           )}

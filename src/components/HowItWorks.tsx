@@ -7,17 +7,17 @@ const HowItWorks: React.FC = () => {
     {
       icon: UserPlus,
       title: "Sign Up",
-      description: "Tell us about your exam, city, and what kind of support you need - travel guidance, exam day support, or strategy sessions."
+      description: "Tell us about your exam, city, and what kind of support you need - travel guidance and stay support."
     },
     {
       icon: Search,
       title: "Find Your Guide",
-      description: "Browse verified mentors who've taken exams in your city. Read their profiles, ratings, and specialties to find the perfect match."
+      description: "Browse verified guides who've taken exams in your city. Read their profiles, ratings, and specialties to find the perfect match."
     },
     {
       icon: Calendar,
       title: "Book Support",
-      description: "Schedule your mentoring sessions - from pre-exam travel planning to morning-of exam day support. Choose what works for you."
+      description: "Schedule your mentoring sessions - pre-exam travel planning . Choose what works for you."
     },
     {
       icon: Heart,
@@ -76,7 +76,7 @@ const HowItWorks: React.FC = () => {
             How ExamGuide Works
           </h2>
           <p className="text-xl text-slate-600 max-w-3xl mx-auto" style={{ fontFamily: 'Lato, sans-serif' }}>
-            Getting support for your exam journey is simple. Connect with mentors who understand exactly what you're going through.
+            Getting support for your exam journey is simple. Connect with guides who understand exactly what you're going through.
           </p>
         </motion.div>
 
