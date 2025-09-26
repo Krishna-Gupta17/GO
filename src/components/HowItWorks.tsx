@@ -11,7 +11,7 @@ const HowItWorks: React.FC = () => {
     },
     {
       icon: Search,
-      title: "Find Your Mentor",
+      title: "Find Your Guide",
       description: "Browse verified mentors who've taken exams in your city. Read their profiles, ratings, and specialties to find the perfect match."
     },
     {
