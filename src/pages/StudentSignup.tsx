@@ -104,7 +104,7 @@ const StudentSignup: React.FC = () => {
   const supportTypes = [
     { id: 'travel', label: 'Travel Guidance', description: 'Help with routes, local tips' },
     { id: 'examday', label: 'Travel & Stay guidance', description: 'Help with routes, accomodation and local tips in one place!' },
-    { id: 'strategy', label: 'Travel+ Stay+ Exam-Strategy', description: 'Mindset, confidence building, study tipsroutes, accomodation and local tips everything at your fingertips!' }
+    // { id: 'strategy', label: 'Travel+ Stay+ Exam-Strategy', description: 'Mindset, confidence building, study tipsroutes, accomodation and local tips everything at your fingertips!' }
   ];
 
   const hotelPriceRanges = [
@@ -124,7 +124,7 @@ const StudentSignup: React.FC = () => {
     { id: 'shared-transport', label: 'Shared Transportation', description: 'Share taxi, cab, or private vehicle to exam center' },
     { id: 'public-transport', label: 'Public Transport', description: 'Travel together via bus, train, or metro' },
     { id: 'early-departure', label: 'Early Departure', description: 'Prefer to leave early to avoid rush and reach on time' },
-    { id: 'safety-companion', label: 'Safety Companion', description: 'Travel together for safety, especially for early morning exams' },
+    // { id: 'safety-companion', label: 'Safety Companion', description: 'Travel together for safety, especially for early morning exams' },
     { id: 'cost-sharing', label: 'Cost Sharing', description: 'Share travel expenses like taxi fare or fuel costs' }
   ];
 
