@@ -62,7 +62,7 @@ const JourneyTogether: React.FC = () => {
     { id: 'public-transport', label: 'Public Transport', description: 'Travel together via bus, train, or metro' },
     { id: 'early-departure', label: 'Early Departure', description: 'Prefer to leave early to avoid rush and reach on time' },
     // { id: 'moral-support', label: 'Moral Support', description: 'Provide emotional support and encouragement during travel' },
-    { id: 'safety-companion', label: 'Safety Companion', description: 'Travel together for safety, especially for early morning exams' },
+    // { id: 'safety-companion', label: 'Safety Companion', description: 'Travel together for safety, especially for early morning exams' },
     { id: 'cost-sharing', label: 'Cost Sharing', description: 'Share travel expenses like taxi fare or fuel costs' }
   ];
 
