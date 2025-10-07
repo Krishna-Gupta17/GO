@@ -3,37 +3,49 @@ import React, { useEffect, useRef, useState } from 'react';
 // Free geocoding / search (no key): prioritise Photon (covers IN well) then fallback to Nominatim.
 // NOTE: Respect usage policies: minimal query frequency & include a custom User-Agent if self-hosting.
 
-interface OSMResult { display_name: string; lat: string; lon: string; }
-interface PhotonFeature { properties: { name?: string; country?: string; state?: string; city?: string; postcode?: string; osm_value?: string; }; geometry: { coordinates: [number, number]; }; }
+interface OSMResult { display_name: string; lat: string; lon: string; type?: string; class?: string; }
+interface PhotonFeature { properties: { name?: string; country?: string; state?: string; city?: string; postcode?: string; osm_value?: string; layer?: string; }; geometry: { coordinates: [number, number]; }; }
 
-async function queryPhoton(q: string): Promise<LocationSelection[]> {
-  const url = `https://photon.komoot.io/api/?q=${encodeURIComponent(q)}&limit=5`;
-  const r = await fetch(url, { headers: { 'Accept': 'application/json' } });
+const PLACE_TYPES = ['city', 'town'];
+const DEBOUNCE_MS = 500;
+const MIN_QUERY_LEN = 2;
+
+async function queryPhoton(q: string, signal?: AbortSignal): Promise<LocationSelection[]> {
+  // Restrict to city/town layers; Photon doesn't have a strict country filter param, so filter by properties.country
+  const url = `https://photon.komoot.io/api/?q=${encodeURIComponent(q)}&limit=5&lang=en&osm_tag=place:city&osm_tag=place:town`;
+  const r = await fetch(url, { headers: { 'Accept': 'application/json' }, signal });
   if (!r.ok) throw new Error('Photon request failed');
   const data = await r.json();
   const features: PhotonFeature[] = data.features || [];
-  return features.map(f => {
-    const addrParts = [f.properties.name, f.properties.city, f.properties.state, f.properties.country].filter(Boolean);
-    return { address: addrParts.join(', '), lat: f.geometry.coordinates[1], lng: f.geometry.coordinates[0] };
-  });
+  return features
+    .filter(f => (f.properties.country || '').toLowerCase() === 'india')
+    .filter(f => PLACE_TYPES.includes((f.properties.osm_value || f.properties.layer || '').toLowerCase()))
+    .map(f => {
+      const addrParts = [f.properties.name, f.properties.city, f.properties.state, f.properties.country].filter(Boolean);
+      return { address: addrParts.join(', '), lat: f.geometry.coordinates[1], lng: f.geometry.coordinates[0] };
+    });
 }
 
-async function queryNominatim(q: string): Promise<LocationSelection[]> {
-  const url = `https://nominatim.openstreetmap.org/search?format=json&limit=5&addressdetails=0&q=${encodeURIComponent(q)}`;
-  const r = await fetch(url, { headers: { 'Accept': 'application/json' } });
+async function queryNominatim(q: string, signal?: AbortSignal): Promise<LocationSelection[]> {
+  // Restrict to India using countrycodes=in and prefer city/town by post-filtering 'type'
+  const url = `https://nominatim.openstreetmap.org/search?format=json&limit=5&addressdetails=1&countrycodes=in&q=${encodeURIComponent(q)}`;
+  const r = await fetch(url, { headers: { 'Accept': 'application/json' } , signal});
   if (!r.ok) throw new Error('Nominatim request failed');
   const data: OSMResult[] = await r.json();
-  return data.map(item => ({ address: item.display_name, lat: parseFloat(item.lat), lng: parseFloat(item.lon) }));
+  return data
+    .filter(item => PLACE_TYPES.includes((item.type || '').toLowerCase()))
+    .map(item => ({ address: item.display_name, lat: parseFloat(item.lat), lng: parseFloat(item.lon) }));
 }
 
-async function geocode(q: string): Promise<LocationSelection[]> {
-  if (!q.trim()) return [];
+async function geocode(q: string, signal?: AbortSignal): Promise<LocationSelection[]> {
+  const trimmed = q.trim();
+  if (!trimmed || trimmed.length < MIN_QUERY_LEN) return [];
   try {
-    const photon = await queryPhoton(q);
+    const photon = await queryPhoton(trimmed + ', India', signal);
     if (photon.length) return photon;
   } catch {/* ignore & fall back */}
   try {
-    return await queryNominatim(q);
+    return await queryNominatim(trimmed, signal);
   } catch {
     return [];
   }
@@ -81,14 +93,14 @@ const LocationSearch: React.FC<LocationSearchProps> = ({ value, placeholder, onS
       abortRef.current = controller;
       setSearching(true); setError(null); setOpen(true);
       try {
-        const data = await geocode(internalValue);
+        const data = await geocode(internalValue, controller.signal);
         setResults(data);
       } catch (e:any) {
         if (e.name !== 'AbortError') setError(e.message || 'Search failed');
       } finally {
         setSearching(false);
       }
-    }, 450);
+    }, DEBOUNCE_MS);
     return () => { if (debounceRef.current) window.clearTimeout(debounceRef.current); };
   }, [internalValue]);
 

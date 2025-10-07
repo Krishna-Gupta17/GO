@@ -9,7 +9,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 
 const examExperienceSchema = z.object({
-  examType: z.string().min(1, 'Please select your exam type'),
+  examType: z.string().min(1, 'Please select your exam type').refine(v => v === 'NDA', { message: 'Only NDA is currently available' }),
   examYear: z.string().min(1, 'Please select the year you took the exam'),
   experience: z.string().min(1, 'Please describe your experience')
 });
@@ -28,7 +28,9 @@ const mentorSchema = z.object({
   admitCard: z.instanceof(FileList).refine(files => files.length > 0, 'Please upload your exam admit card')
 });
 
-type MentorFormData = z.infer<typeof mentorSchema>;
+type MentorFormData = Omit<z.infer<typeof mentorSchema>, 'examExperiences'> & {
+  examExperiences: Array<Omit<z.infer<typeof examExperienceSchema>, 'examType'> & { examType: string }>;
+};
 
 const BecomeMentor: React.FC = () => {
   const navigate = useNavigate();
@@ -40,7 +42,7 @@ const BecomeMentor: React.FC = () => {
   } = useForm<MentorFormData>({
     resolver: zodResolver(mentorSchema),
     defaultValues: {
-      examExperiences: [{ examType: '', examYear: '', experience: '' }]
+      examExperiences: [{ examType: 'NDA', examYear: '', experience: '' }]
     }
   });
 
@@ -65,8 +67,17 @@ const BecomeMentor: React.FC = () => {
     }
   };
 
-  const examTypes = [
-    'JEE Main', 'JEE Advanced', 'NEET', 'CAT', 'GATE', 'UPSC', 'SSC', 'Bank PO', 'Other'
+  const examOptions: { value: string; label: string; enabled: boolean }[] = [
+    { value: 'NDA', label: 'NDA', enabled: true },
+    { value: 'JEE Main', label: 'JEE Main (Coming soon)', enabled: false },
+    { value: 'JEE Advanced', label: 'JEE Advanced (Coming soon)', enabled: false },
+    { value: 'NEET', label: 'NEET (Coming soon)', enabled: false },
+    { value: 'CAT', label: 'CAT (Coming soon)', enabled: false },
+    { value: 'GATE', label: 'GATE (Coming soon)', enabled: false },
+    { value: 'UPSC', label: 'UPSC (Coming soon)', enabled: false },
+    { value: 'SSC', label: 'SSC (Coming soon)', enabled: false },
+    { value: 'Bank PO', label: 'Bank PO (Coming soon)', enabled: false },
+    { value: 'Other', label: 'Other (Coming soon)', enabled: false }
   ];
 
   const supportTypes = [
@@ -177,7 +188,7 @@ const BecomeMentor: React.FC = () => {
                   </h2>
                   <button
                     type="button"
-                    onClick={() => append({ examType: '', examYear: '', experience: '' })}
+                    onClick={() => append({ examType: 'NDA', examYear: '', experience: '' })}
                     className="bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors flex items-center text-sm"
                   >
                     <Plus className="h-4 w-4 mr-1" />
@@ -214,8 +225,8 @@ const BecomeMentor: React.FC = () => {
                             className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors"
                           >
                             <option value="">Select your exam</option>
-                            {examTypes.map(exam => (
-                              <option key={exam} value={exam}>{exam}</option>
+                            {examOptions.map(opt => (
+                              <option key={opt.value} value={opt.value} disabled={!opt.enabled}>{opt.label}</option>
                             ))}
                           </select>
                           {errors.examExperiences?.[index]?.examType && (

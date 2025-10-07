@@ -13,7 +13,9 @@ const journeySchema = z.object({
   email: z.string().email('Please enter a valid email address'),
   phone: z.string().min(10, 'Please enter a valid phone number'),
   city: z.string().min(1, 'Please enter your city'),
-  examType: z.string().min(1, 'Please select your exam type'),
+  examType: z.string().min(1, 'Please select your exam type').refine(v => v === 'NDA', {
+    message: 'Only NDA is currently available'
+  }),
   examDate: z.string().min(1, 'Please select your exam date'),
   examCenter: z.string().min(1, 'Please enter your exam center'),
   departureLocation: z.string().min(1, 'Please enter your departure location'),
@@ -25,7 +27,7 @@ const journeySchema = z.object({
   additionalInfo: z.string().optional()
 });
 
-type JourneyFormData = z.infer<typeof journeySchema>;
+type JourneyFormData = Omit<z.infer<typeof journeySchema>, 'examType'> & { examType: string };
 
 const JourneyTogether: React.FC = () => {
   const navigate = useNavigate();
@@ -53,8 +55,17 @@ const JourneyTogether: React.FC = () => {
     }
   };
 
-  const examTypes = [
-    'JEE Main', 'JEE Advanced', 'NEET', 'CAT', 'GATE', 'UPSC', 'SSC', 'Bank PO', 'Other'
+  const examOptions: { value: string; label: string; enabled: boolean }[] = [
+    { value: 'NDA', label: 'NDA', enabled: true },
+    { value: 'JEE Main', label: 'JEE Main (Coming soon)', enabled: false },
+    { value: 'JEE Advanced', label: 'JEE Advanced (Coming soon)', enabled: false },
+    { value: 'NEET', label: 'NEET (Coming soon)', enabled: false },
+    { value: 'CAT', label: 'CAT (Coming soon)', enabled: false },
+    { value: 'GATE', label: 'GATE (Coming soon)', enabled: false },
+    { value: 'UPSC', label: 'UPSC (Coming soon)', enabled: false },
+    { value: 'SSC', label: 'SSC (Coming soon)', enabled: false },
+    { value: 'Bank PO', label: 'Bank PO (Coming soon)', enabled: false },
+    { value: 'Other', label: 'Other (Coming soon)', enabled: false }
   ];
 
   const travelPreferences = [
@@ -189,8 +200,8 @@ const JourneyTogether: React.FC = () => {
                       className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors"
                     >
                       <option value="">Select your exam</option>
-                      {examTypes.map(exam => (
-                        <option key={exam} value={exam}>{exam}</option>
+                      {examOptions.map(opt => (
+                        <option key={opt.value} value={opt.value} disabled={!opt.enabled}>{opt.label}</option>
                       ))}
                     </select>
                     {errors.examType && (

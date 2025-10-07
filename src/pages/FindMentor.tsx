@@ -147,11 +147,11 @@ const FindMentor: React.FC = () => {
   ];
 
   const cities = ["All Cities", "Delhi", "Mumbai", "Bangalore", "Pune", "Chennai", "Kolkata", "Hyderabad"];
-  const exams = ["All Exams", "JEE Main", "JEE Advanced", "NEET", "CAT", "GATE", "XAT"];
+  const exams = ["All Exams", "NDA"];
 
   const filteredMentors = mentors.filter(mentor => {
     const cityMatch = !selectedCity || selectedCity === "All Cities" || mentor.city === selectedCity;
-    const examMatch = !selectedExam || selectedExam === "All Exams" || mentor.exams.includes(selectedExam);
+  const examMatch = !selectedExam || selectedExam === "All Exams" || mentor.exams.includes(selectedExam);
     return cityMatch && examMatch;
   });
 

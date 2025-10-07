@@ -37,7 +37,7 @@
 	}
 })();
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -46,12 +46,18 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import LocationSearch, { type LocationSelection } from '../components/LocationSearch';
 
 const studentSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
   email: z.string().email('Please enter a valid email address'),
   phone: z.string().min(10, 'Please enter a valid phone number'),
-  examType: z.string().min(1, 'Please select your exam type'),
+  examType: z
+    .string()
+    .min(1, 'Please select your exam type')
+    .refine((v) => v === 'NDA', {
+      message: 'Only NDA is currently available',
+    }),
   examCity: z.string().min(1, 'Please enter your exam city'),
   examDate: z.string().min(1, 'Please select your exam date'),
   examCenterAddress: z.string().min(1, 'Please enter your exam center address'),
@@ -59,10 +65,34 @@ const studentSchema = z.object({
   hotelPriceRange: z.string().optional(),
   travelMode: z.array(z.string()).optional(),
   travelPreference: z.array(z.string()).optional(),
+  // Required admit card upload: PDF/JPG/PNG up to 5MB
+  admitCard: z
+    .any()
+    .refine(
+      (files) => files && files.length > 0 && files[0] instanceof File,
+      'Admit card is required'
+    )
+    .refine(
+      (files) => {
+        const file: File | undefined = files?.[0];
+        if (!file) return false; // already caught by previous refine
+        return file.size <= 5 * 1024 * 1024; // 5MB
+      },
+      'File size must be 5MB or less'
+    )
+    .refine(
+      (files) => {
+        const file: File | undefined = files?.[0];
+        if (!file) return false; // already caught
+        const allowed = ['application/pdf', 'image/png', 'image/jpeg'];
+        return allowed.includes(file.type);
+      },
+      'Only PDF, PNG, or JPG files are allowed'
+    ),
   additionalInfo: z.string().optional()
 });
 
-type StudentFormData = z.infer<typeof studentSchema>;
+type StudentFormData = Omit<z.infer<typeof studentSchema>, 'examType'> & { examType: string };
 
 const StudentSignup: React.FC = () => {
   const navigate = useNavigate();
@@ -70,6 +100,7 @@ const StudentSignup: React.FC = () => {
     register,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors, isSubmitting }
   } = useForm<StudentFormData>({
     resolver: zodResolver(studentSchema),
@@ -81,6 +112,7 @@ const StudentSignup: React.FC = () => {
   });
 
   const watchedSupportTypes = watch('supportType') || [];
+  const [examCitySelection, setExamCitySelection] = useState<LocationSelection | null>(null);
 
   const onSubmit = async (_data: StudentFormData) => {
     try {
@@ -97,15 +129,24 @@ const StudentSignup: React.FC = () => {
     }
   };
 
-  const examTypes = [
-    'JEE Main', 'JEE Advanced', 'NEET', 'CAT', 'GATE', 'UPSC', 'SSC', 'Bank PO', 'Other'
+  const examOptions: { value: string; label: string; enabled: boolean }[] = [
+    { value: 'NDA', label: 'NDA', enabled: true },
+    { value: 'JEE Main', label: 'JEE Main (Coming soon)', enabled: false },
+    { value: 'JEE Advanced', label: 'JEE Advanced (Coming soon)', enabled: false },
+    { value: 'NEET', label: 'NEET (Coming soon)', enabled: false },
+    { value: 'CAT', label: 'CAT (Coming soon)', enabled: false },
+    { value: 'GATE', label: 'GATE (Coming soon)', enabled: false },
+    { value: 'UPSC', label: 'UPSC (Coming soon)', enabled: false },
+    { value: 'SSC', label: 'SSC (Coming soon)', enabled: false },
+    { value: 'Bank PO', label: 'Bank PO (Coming soon)', enabled: false },
+    { value: 'Other', label: 'Other (Coming soon)', enabled: false },
   ];
 
-  const supportTypes = [
-    { id: 'travel', label: 'Travel Guidance', description: 'Help with routes, local tips' },
-    { id: 'examday', label: 'Travel & Stay guidance', description: 'Help with routes, accomodation and local tips in one place!' },
-    // { id: 'strategy', label: 'Travel+ Stay+ Exam-Strategy', description: 'Mindset, confidence building, study tipsroutes, accomodation and local tips everything at your fingertips!' }
-  ];
+  // const supportTypes = [
+  //   { id: 'travel', label: 'Travel Guidance', description: 'Help with routes, local tips' },
+  //   { id: 'examday', label: 'Travel & Stay guidance', description: 'Help with routes, accomodation and local tips in one place!' },
+  //   // { id: 'strategy', label: 'Travel+ Stay+ Exam-Strategy', description: 'Mindset, confidence building, study tipsroutes, accomodation and local tips everything at your fingertips!' }
+  // ];
 
   const hotelPriceRanges = [
     { value: 'budget', label: 'Budget (₹500-₹1,500/night)', description: 'Basic accommodation with essential amenities' },
@@ -224,8 +265,10 @@ const StudentSignup: React.FC = () => {
                       className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors"
                     >
                       <option value="">Select your exam</option>
-                      {examTypes.map(exam => (
-                        <option key={exam} value={exam}>{exam}</option>
+                      {examOptions.map(opt => (
+                        <option key={opt.value} value={opt.value} disabled={!opt.enabled}>
+                          {opt.label}
+                        </option>
                       ))}
                     </select>
                     {errors.examType && (
@@ -237,15 +280,21 @@ const StudentSignup: React.FC = () => {
                     <label htmlFor="examCity" className="block text-sm font-medium text-slate-700 mb-2">
                       Exam City *
                     </label>
-                    <input
-                      {...register('examCity')}
-                      type="text"
-                      id="examCity"
-                      className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors"
-                      placeholder="e.g., Delhi, Mumbai, Bangalore"
+                    {/* Hidden input registered with RHF holds the selected address */}
+                    <input type="hidden" id="examCity" {...register('examCity')} readOnly />
+                    <LocationSearch
+                      value={examCitySelection}
+                      onSelect={(loc) => {
+                        setExamCitySelection(loc);
+                        setValue('examCity', loc.address, { shouldValidate: true, shouldDirty: true });
+                      }}
+                      placeholder="Search and select your exam city"
+                      className=""
                     />
-                    {errors.examCity && (
+                    {errors.examCity ? (
                       <p className="mt-1 text-sm text-red-600">{errors.examCity.message}</p>
+                    ) : (
+                      <p className="mt-1 text-xs text-slate-500">Please select from the dropdown so we can capture accurate city details.</p>
                     )}
                   </div>
 
@@ -283,7 +332,7 @@ const StudentSignup: React.FC = () => {
               </div>
 
               {/* Support Type */}
-              <div>
+              {/* <div>
                 <h2 className="text-xl font-semibold text-slate-900 mb-6 flex items-center">
                   <MapPin className="h-5 w-5 mr-2 text-emerald-600" />
                   What Support Do You Need?
@@ -312,7 +361,7 @@ const StudentSignup: React.FC = () => {
                 {errors.supportType && (
                   <p className="mt-2 text-sm text-red-600">{errors.supportType.message}</p>
                 )}
-              </div>
+              </div> */}
 
               {/* Conditional Travel Information */}
               {needsTravelInfo && (
@@ -420,6 +469,31 @@ const StudentSignup: React.FC = () => {
                   </div>
                 </>
               )}
+
+              {/* Admit Card Upload (Required) */}
+              <div>
+                <h2 className="text-xl font-semibold text-slate-900 mb-6 flex items-center">
+                  Upload Admit Card
+                </h2>
+                <label htmlFor="admitCard" className="block text-sm font-medium text-slate-700 mb-2">
+                  File (PDF, JPG, or PNG, max 5MB) *
+                </label>
+                <input
+                  {...register('admitCard')}
+                  type="file"
+                  id="admitCard"
+                  accept="application/pdf,image/png,image/jpeg"
+                  className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100"
+                />
+                {errors.admitCard && (
+                  <p className="mt-1 text-sm text-red-600">{String(errors.admitCard.message)}</p>
+                )}
+                {!errors.admitCard && (
+                  <p className="mt-2 text-xs text-slate-500">
+                    Uploading your admit card helps the guide verify exam details and provide better assistance.
+                  </p>
+                )}
+              </div>
 
               {/* Additional Information */}
               <div>
