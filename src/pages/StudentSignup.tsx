@@ -65,17 +65,18 @@ const studentSchema = z.object({
   hotelPriceRange: z.string().optional(),
   travelMode: z.array(z.string()).optional(),
   travelPreference: z.array(z.string()).optional(),
-  // Required admit card upload: PDF/JPG/PNG up to 5MB
+  // Optional admit card upload: PDF/JPG/PNG up to 5MB (validates only when provided)
   admitCard: z
     .any()
+    .optional()
     .refine(
-      (files) => files && files.length > 0 && files[0] instanceof File,
-      'Admit card is required'
+      (files) => !files || files.length === 0 || files[0] instanceof File,
+      'Invalid file upload'
     )
     .refine(
       (files) => {
         const file: File | undefined = files?.[0];
-        if (!file) return false; // already caught by previous refine
+        if (!file) return true; // optional: allow empty
         return file.size <= 5 * 1024 * 1024; // 5MB
       },
       'File size must be 5MB or less'
@@ -83,7 +84,7 @@ const studentSchema = z.object({
     .refine(
       (files) => {
         const file: File | undefined = files?.[0];
-        if (!file) return false; // already caught
+        if (!file) return true; // optional: allow empty
         const allowed = ['application/pdf', 'image/png', 'image/jpeg'];
         return allowed.includes(file.type);
       },
@@ -470,13 +471,13 @@ const StudentSignup: React.FC = () => {
                 </>
               )}
 
-              {/* Admit Card Upload (Required) */}
+              {/* Admit Card Upload (Optional) */}
               <div>
                 <h2 className="text-xl font-semibold text-slate-900 mb-6 flex items-center">
-                  Upload Admit Card
+                  Upload Admit Card (Optional)
                 </h2>
                 <label htmlFor="admitCard" className="block text-sm font-medium text-slate-700 mb-2">
-                  File (PDF, JPG, or PNG, max 5MB) *
+                  File (PDF, JPG, or PNG, max 5MB)
                 </label>
                 <input
                   {...register('admitCard')}
@@ -490,7 +491,7 @@ const StudentSignup: React.FC = () => {
                 )}
                 {!errors.admitCard && (
                   <p className="mt-2 text-xs text-slate-500">
-                    Uploading your admit card helps the guide verify exam details and provide better assistance.
+                    Optional: Uploading your admit card helps the guide verify exam details and provide better assistance.
                   </p>
                 )}
               </div>
