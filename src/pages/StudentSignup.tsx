@@ -44,24 +44,24 @@ import { z } from 'zod';
 import { ArrowRight, MapPin, BookOpen, Users, Home, Plane } from 'lucide-react';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import LocationSearch, { type LocationSelection } from '../components/LocationSearch';
+import { useAuth } from '../context/auth';
+
+const BACKEND = import.meta.env.VITE_BACKEND_URL || 'http://localhost:4000';
 
 const studentSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
   email: z.string().email('Please enter a valid email address'),
   phone: z.string().min(10, 'Please enter a valid phone number'),
-  examType: z
-    .string()
-    .min(1, 'Please select your exam type')
-    .refine((v) => v === 'NDA', {
-      message: 'Only NDA is currently available',
-    }),
+  examType: z.literal('NDA', { errorMap: () => ({ message: 'Only NDA is currently available' }) }),
   examCity: z.string().min(1, 'Please enter your exam city'),
   examDate: z.string().min(1, 'Please select your exam date'),
   examCenterAddress: z.string().min(1, 'Please enter your exam center address'),
-  supportType: z.array(z.string()).min(1, 'Please select at least one support type'),
+  // Required by type, with a default from RHF defaultValues
+  supportType: z.array(z.string()),
   hotelPriceRange: z.string().optional(),
   travelMode: z.array(z.string()).optional(),
   travelPreference: z.array(z.string()).optional(),
@@ -93,10 +93,12 @@ const studentSchema = z.object({
   additionalInfo: z.string().optional()
 });
 
-type StudentFormData = Omit<z.infer<typeof studentSchema>, 'examType'> & { examType: string };
+type StudentFormData = z.infer<typeof studentSchema>;
 
 const StudentSignup: React.FC = () => {
   const navigate = useNavigate();
+  const { user, emailVerified, sendMagicLink, sendVerificationEmail } = useAuth();
+  const [sending, setSending] = React.useState(false);
   const {
     register,
     handleSubmit,
@@ -115,20 +117,56 @@ const StudentSignup: React.FC = () => {
   const watchedSupportTypes = watch('supportType') || [];
   const [examCitySelection, setExamCitySelection] = useState<LocationSelection | null>(null);
 
-  const onSubmit = async (_data: StudentFormData) => {
+  // No password linking required; sign-in link verification is sufficient
+
+  const onSubmit = async (data: StudentFormData) => {
     try {
-      void _data;
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      toast.success('Registration successful! Redirecting to find Guide...');
-      setTimeout(() => {
-        navigate('/find-mentor');
-      }, 2000);
-    } catch (error) {
-      toast.error('Something went wrong. Please try again.');
+      if (!user) {
+        toast.error('Please verify your email first.');
+        return;
+      }
+      const fd = new FormData();
+      Object.entries(data).forEach(([k, v]) => {
+        if (k === 'admitCard') return; // handle separately
+        if (Array.isArray(v)) v.forEach((vv) => fd.append(k, String(vv)));
+        else if (v !== undefined && v !== null) fd.append(k, String(v));
+      });
+      fd.append('uid', user.uid);
+      const file = (data as any).admitCard?.[0];
+      if (file) fd.append('admitCard', file);
+
+      const res = await axios.post(`${BACKEND}/api/students/signup`, fd, { headers: { 'Content-Type': 'multipart/form-data' } });
+      if (res.data?.ok) {
+        toast.success('Registration successful! Redirecting to find Guide...');
+        setTimeout(() => navigate('/find-mentor'), 1200);
+      } else {
+        toast.error('Submission failed.');
+      }
+    } catch (error:any) {
+      toast.error(error?.response?.data?.error || 'Something went wrong. Please try again.');
     }
   };
+
+  const requestVerify = async (email: string) => {
+    setSending(true);
+    try {
+      // If user is already verified, do nothing but notify
+      if (emailVerified) {
+        toast.success('Email already verified');
+        return;
+      }
+      // If signed in, send verification email; otherwise use magic link sign-in flow
+      if (user) {
+        await sendVerificationEmail();
+        toast.info('Verification email sent. Check your inbox.');
+      } else {
+        await sendMagicLink(email);
+        toast.info('Sign-in link sent. Check your inbox to verify.');
+      }
+    } finally { setSending(false); }
+  };
+
+  // Removed password creation flow
 
   const examOptions: { value: string; label: string; enabled: boolean }[] = [
     { value: 'NDA', label: 'NDA', enabled: true },
@@ -186,6 +224,9 @@ const StudentSignup: React.FC = () => {
             <p className="text-xl text-slate-600 max-w-2xl mx-auto">
               Tell us about your exam and what support you need. We'll connect you with experienced guide in your city.
             </p>
+            <p className="mt-4 text-lg text-slate-800">
+              Already have an account? <a className="text-emerald-700 font-semibold underline hover:text-emerald-800" href="/#/signin">Sign in</a>
+            </p>
           </div>
 
           <div className="bg-white rounded-2xl shadow-sm p-8">
@@ -218,17 +259,31 @@ const StudentSignup: React.FC = () => {
                     <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-2">
                       Email Address *
                     </label>
-                    <input
-                      {...register('email')}
-                      type="email"
-                      id="email"
-                      className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors"
-                      placeholder="your.email@example.com"
-                    />
+                    <div className="flex gap-2">
+                      <input
+                        {...register('email')}
+                        type="email"
+                        id="email"
+                        className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors"
+                        placeholder="your.email@example.com"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => requestVerify(watch('email'))}
+                        disabled={sending}
+                        className={`shrink-0 px-4 py-3 rounded-lg border ${emailVerified ? 'border-emerald-600 bg-emerald-50 text-emerald-700' : 'border-emerald-600 text-emerald-700 hover:bg-emerald-50'} disabled:opacity-50`}
+                      >
+                        {emailVerified ? 'Verified' : (sending ? 'Sending…' : 'Verify')}
+                      </button>
+                    </div>
                     {errors.email && (
                       <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>
                     )}
+                    {emailVerified && (
+                      <p className="mt-1 text-xs text-emerald-700">Email verified ✓</p>
+                    )}
                   </div>
+                {/* Password creation removed */}
 
                   <div>
                     <label htmlFor="phone" className="block text-sm font-medium text-slate-700 mb-2">
@@ -510,13 +565,15 @@ const StudentSignup: React.FC = () => {
                 />
               </div>
 
+              {/* Password setup removed */}
+
               <div className="flex justify-center">
                 <button
                   type="submit"
-                  disabled={isSubmitting}
+                  disabled={isSubmitting || !user || !emailVerified}
                   className="bg-emerald-600 text-white px-8 py-4 rounded-lg hover:bg-emerald-700 transition-colors flex items-center disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {isSubmitting ? 'Finding Guides...' : 'Find My Guides'}
+                  {isSubmitting ? 'Submitting…' : (!user ? 'Verify Email to Continue' : (!emailVerified ? 'Verify Email' : 'Create Account'))}
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </button>
               </div>

@@ -1,16 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Heart } from 'lucide-react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/auth';
+import axios from 'axios';
 
 // Small helper for class merging (kept minimal to avoid adding deps)
 function cx(...classes: (string | false | undefined)[]) {
   return classes.filter(Boolean).join(' ');
 }
 
+const BACKEND = import.meta.env.VITE_BACKEND_URL || 'http://localhost:4000';
+
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+  const { user, signOut } = useAuth();
+  const navigate = useNavigate();
+  const [hasProfile, setHasProfile] = useState(false);
 
   useEffect(() => {
     const onScroll = () => {
@@ -25,6 +32,26 @@ const Header: React.FC = () => {
   useEffect(() => {
     setIsMenuOpen(false);
   }, [location.pathname]);
+
+  // Check backend status to determine if profile exists; only then show Dashboard
+  useEffect(() => {
+    let active = true;
+    const run = async () => {
+      if (!user) { if (active) setHasProfile(false); return; }
+      try {
+        const token = await user.getIdToken();
+        const res = await axios.get(`${BACKEND}/api/students/status`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        if (active) setHasProfile(!!res.data?.hasProfile);
+      } catch {
+        if (active) setHasProfile(false);
+      } finally {
+      }
+    };
+    run();
+    return () => { active = false; };
+  }, [user]);
 
   const navItems = [
     { to: '/find-mentor', label: 'Find Guide' },
@@ -91,16 +118,28 @@ const Header: React.FC = () => {
               </Link>
             ))}
             <Link
-              to="/student-signup"
+              to={user && hasProfile ? '/profile' : '/student-signup'}
               className={cx(
                 'relative ml-3 inline-flex items-center justify-center overflow-hidden rounded-xl px-5 py-2.5 font-semibold text-sm',
                 'text-white transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/60',
                 'bg-gradient-to-r from-emerald-600 via-emerald-500 to-emerald-600 hover:from-emerald-500 hover:via-emerald-600 hover:to-emerald-500 shadow-sm hover:shadow-emerald-500/30'
               )}
             >
-              <span className="relative z-10">Get Started</span>
+              <span className="relative z-10">{user && hasProfile ? 'Dashboard' : 'Get Started'}</span>
               <span className="absolute inset-0 opacity-0 hover:opacity-100 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.25),transparent_60%)] transition-opacity duration-500" />
             </Link>
+
+            {user && (
+              <button
+                onClick={async ()=>{ try { await signOut(); navigate('/student-signup'); } catch {} }}
+                className={cx(
+                  'ml-2 px-4 py-2 rounded-lg border border-slate-300 text-slate-700 hover:bg-slate-50',
+                  'focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/60'
+                )}
+              >
+                Sign out
+              </button>
+            )}
 
             
           </nav>
@@ -144,12 +183,29 @@ const Header: React.FC = () => {
                 )}
               </Link>
             ))}
-            <Link
-              to="/student-signup"
-              className="block relative mt-4 px-5 py-3 rounded-xl font-semibold text-sm text-white bg-gradient-to-r from-emerald-600 via-emerald-500 to-emerald-600 shadow-sm hover:shadow-emerald-500/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/60"
-            >
-              Get Started
-            </Link>
+            {!user || !hasProfile ? (
+              <Link
+                to="/student-signup"
+                className="block relative mt-4 px-5 py-3 rounded-xl font-semibold text-sm text-white bg-gradient-to-r from-emerald-600 via-emerald-500 to-emerald-600 shadow-sm hover:shadow-emerald-500/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/60"
+              >
+                Get Started
+              </Link>
+            ) : (
+              <>
+                <Link
+                  to="/profile"
+                  className="block relative mt-4 px-5 py-3 rounded-xl font-semibold text-sm text-white bg-gradient-to-r from-emerald-600 via-emerald-500 to-emerald-600 shadow-sm hover:shadow-emerald-500/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/60"
+                >
+                  Dashboard
+                </Link>
+                <button
+                  onClick={async ()=>{ try { await signOut(); navigate('/student-signup'); } catch {} }}
+                  className="mt-2 w-full px-5 py-3 rounded-xl font-semibold text-sm border border-slate-300 text-slate-700 hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/60"
+                >
+                  Sign out
+                </button>
+              </>
+            )}
           </div>
         </div>
       </div>
