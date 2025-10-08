@@ -11,6 +11,36 @@ const FindMentor: React.FC = () => {
   const mentors = [
     {
       id: 1,
+      name: "Ayush Sengar",
+      image:'/AyushS.png',
+      rating: 4.0,
+      reviewCount: 17,
+      city: "Delhi",
+      exams: ["NDA"],
+      year: "2024",
+      tags: [ "Local transport expert", "Knows safe eateries"],
+      // intro: "I understand exam stress! I'll help you navigate to your exam center like a local and keep you calm on exam day.",
+      verified: true,
+      responseTime: "2 hours",
+      // supportTypes: ["Travel & Stay", "Exam Day Support", "Strategy Session"]
+    },
+    {
+      id: 2,
+      name: "Yash",
+      image:'/Yash.png',
+      rating: 4.0,
+      reviewCount: 17,
+      city: "Delhi",
+      exams: ["NDA"],
+      year: "2024",
+      tags: [ "Local transport expert", "Knows safe eateries"],
+      // intro: "I understand exam stress! I'll help you navigate Delhi like a local and keep you calm on exam day.",
+      verified: true,
+      responseTime: "2 hours",
+      // supportTypes: ["Travel & Stay", "Exam Day Support", "Strategy Session"]
+    },
+    {
+      id: 3,
       name: "Anchal Patel",
       image:'/Anchal.jpeg',
       rating: 4.0,
@@ -19,13 +49,13 @@ const FindMentor: React.FC = () => {
       exams: ["JEE Main", "JEE Advanced"],
       year: "2024",
       tags: [ "Local transport expert", "Knows safe eateries"],
-      intro: "I understand exam stress! I'll help you navigate Delhi like a local and keep you calm on exam day.",
+      // intro: "I understand exam stress! I'll help you navigate Delhi like a local and keep you calm on exam day.",
       verified: true,
       responseTime: "2 hours",
-      supportTypes: ["Travel & Stay", "Exam Day Support", "Strategy Session"]
+      // supportTypes: ["Travel & Stay", "Exam Day Support", "Strategy Session"]
     },
     {
-      id: 2,
+      id: 4,
       name: "Priyanshu Yadav",
       image: '/Priyanshu.jpeg',
       rating: 4.8,
@@ -33,14 +63,14 @@ const FindMentor: React.FC = () => {
       city: "Pune",
       exams: ["JEE Mains","JEE Advanced"],
       year: "2024",
-      tags: ["Accommodation expert", "Budget-friendly tips", "Motivational"],
-      intro: "From finding the perfect stay to exam day motivation - I've got your back throughout your Pune journey!",
+      tags: ["Budget-friendly tips", "Motivational"],
+      // intro: "From finding the perfect stay to exam day motivation - I've got your back throughout your Pune journey!",
       verified: true,
       responseTime: "1 hour",
-      supportTypes: ["Travel & Stay", "Strategy Session"]
+      // supportTypes: ["Travel & Stay", "Strategy Session"]
     },
     {
-      id: 3,
+      id: 5,
       name: "Rashi Ashish Shrivastava",
       image:'/Rashi.jpeg',
       rating: 5.0,
@@ -49,13 +79,13 @@ const FindMentor: React.FC = () => {
       exams: ["CAT", "XAT"],
       year: "2023",
       tags: ["Traffic navigation", "Tech-savvy", "Quick responder"],
-      intro: "Bangalore traffic can be tricky! I'll share the best routes and timing to reach your center stress-free.",
+      // intro: "Bangalore traffic can be tricky! I'll share the best routes and timing to reach your center stress-free.",
       verified: true,
       responseTime: "30 mins",
-      supportTypes: ["Travel & Stay", "Exam Day Support"]
+      // supportTypes: ["Travel & Stay", "Exam Day Support"]
     },
     {
-      id: 4,
+      id: 6,
       name: "Ayush Dixit",
       image: '/Ayush.jpeg',
       rating: 4.7,
@@ -63,14 +93,14 @@ const FindMentor: React.FC = () => {
       city: "Mumbai",
       exams: ["NDA","SSB","JEE Mains", "JEE Advanced"],
       year: "2022",
-      tags: ["Local trains expert", "Budget accommodation", "Study spots"],
-      intro: "Mumbai local trains can be overwhelming. I'll teach you the routes and share hidden study-friendly cafes!",
+      tags: ["Local trains expert",  "Study spots"],
+      // intro: "Mumbai local trains can be overwhelming. I'll teach you the routes and share hidden study-friendly cafes!",
       verified: true,
       responseTime: "3 hours",
-      supportTypes: ["Travel & Stay", "Exam Day Support", "Strategy Session"]
+      // supportTypes: ["Travel & Stay", "Exam Day Support", "Strategy Session"]
     },
     {
-      id: 5,
+      id: 7,
       name: "Krishna Gupta",
       image: '/Krishna.jpeg',
       rating: 4.7,
@@ -79,13 +109,13 @@ const FindMentor: React.FC = () => {
       exams: ["JEE Mains", "JEE Advanced","CUET UG"],
       year: "2024",
       tags: ["Local trains expert", "Budget accommodation", "Study spots"],
-      intro: "Mumbai local trains can be overwhelming. I'll teach you the routes and share hidden study-friendly cafes!",
+      // intro: "Mumbai local trains can be overwhelming. I'll teach you the routes and share hidden study-friendly cafes!",
       verified: true,
       responseTime: "3 hours",
-      supportTypes: ["Travel & Stay", "Exam Day Support", "Strategy Session"]
+      // supportTypes: ["Travel & Stay", "Exam Day Support", "Strategy Session"]
     },
     {
-      id: 6,
+      id:8,
       name: "Deepak Raj",
       image: '/Deepak.jpeg',
       rating: 4.1,
@@ -94,13 +124,13 @@ const FindMentor: React.FC = () => {
       exams: ["NDA", "WBJEE", "JEE Mains", "JEE Advanced"],
       year: "2024",
       tags: ["Local trains expert", "Budget accommodation", "Study spots"],
-      intro: "Mumbai local trains can be overwhelming. I'll teach you the routes and share hidden study-friendly cafes!",
+      // intro: "Mumbai local trains can be overwhelming. I'll teach you the routes and share hidden study-friendly cafes!",
       verified: true,
       responseTime: "3 hours",
-      supportTypes: ["Travel & Stay", "Exam Day Support", "Strategy Session"]
+      // supportTypes: ["Travel & Stay", "Exam Day Support", "Strategy Session"]
     },
      {
-      id: 7,
+      id: 9,
       name: "Abhishek Singh",
       image: '/Abhishek.jpeg',
       rating: 4.1,
@@ -109,13 +139,13 @@ const FindMentor: React.FC = () => {
       exams: ["JEE Mains", "JEE Advanced"],
       year: "2024",
       tags: ["Local trains expert", "Budget accommodation", "Study spots"],
-      intro: "Mumbai local trains can be overwhelming. I'll teach you the routes and share hidden study-friendly cafes!",
+      // intro: "Mumbai local trains can be overwhelming. I'll teach you the routes and share hidden study-friendly cafes!",
       verified: true,
       responseTime: "3 hours",
-      supportTypes: ["Travel & Stay", "Exam Day Support", "Strategy Session"]
+      // supportTypes: ["Travel & Stay", "Exam Day Support", "Strategy Session"]
     },
     {
-      id: 8,
+      id: 10,
       name: "Ankit Yadav",
       image: '/Ankit.jpeg',
       rating: 4.1,
@@ -124,13 +154,13 @@ const FindMentor: React.FC = () => {
       exams: ["GATE", "CAT","SSB"],
       year: "2022",
       tags: ["Local trains expert", "Budget accommodation", "Study spots"],
-      intro: "Mumbai local trains can be overwhelming. I'll teach you the routes and share hidden study-friendly cafes!",
+      // intro: "Mumbai local trains can be overwhelming. I'll teach you the routes and share hidden study-friendly cafes!",
       verified: true,
       responseTime: "3 hours",
-      supportTypes: ["Travel & Stay", "Exam Day Support", "Strategy Session"]
+      // supportTypes: ["Travel & Stay", "Exam Day Support", "Strategy Session"]
     },
     {
-      id: 9,
+      id: 11,
       name: "Ananya Pandey",
       image: '/Ananya.jpeg',
       rating: 4.1,
@@ -139,10 +169,10 @@ const FindMentor: React.FC = () => {
       exams: ["NEET"],
       year: "2024",
       tags: ["Local trains expert", "Budget accommodation", "Study spots"],
-      intro: "Mumbai local trains can be overwhelming. I'll teach you the routes and share hidden study-friendly cafes!",
+      // intro: "Mumbai local trains can be overwhelming. I'll teach you the routes and share hidden study-friendly cafes!",
       verified: true,
       responseTime: "3 hours",
-      supportTypes: ["Travel & Stay", "Exam Day Support", "Strategy Session"]
+      // supportTypes: ["Travel & Stay", "Exam Day Support", "Strategy Session"]
     }
   ];
 
@@ -255,9 +285,7 @@ const FindMentor: React.FC = () => {
                   Responds in {mentor.responseTime}
                 </div>
 
-                <p className="text-slate-700 mb-4 text-sm leading-relaxed" style={{ fontFamily: 'Lato, sans-serif' }}>
-                  {mentor.intro}
-                </p>
+                
 
                 <div className="flex flex-wrap gap-2 mb-4">
                   {mentor.tags.map(tag => (
@@ -268,13 +296,9 @@ const FindMentor: React.FC = () => {
                 </div>
 
                 <div className="mb-4">
-                  <p className="text-xs text-slate-600 mb-2">Offers:</p>
+                  {/* <p className="text-xs text-slate-600 mb-2">Offers:</p> */}
                   <div className="flex flex-wrap gap-1">
-                    {mentor.supportTypes.map(type => (
-                      <span key={type} className="bg-sky-50 text-sky-700 px-2 py-1 rounded text-xs">
-                        {type}
-                      </span>
-                    ))}
+                    
                   </div>
                 </div>
 
