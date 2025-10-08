@@ -63,7 +63,7 @@ const App: React.FC = () => {
               <Route path="/signin" element={<SignIn />} />
               {/* <Route path="/profile" element={<Profile /> */}
               <Route path="/find-mentor" element={<FindMentor />} />
-              <Route path="/become-mentor" element={<BecomeMentor} />
+              <Route path="/become-mentor" element={<BecomeMentor/>} />
               <Route path="/journey-together" element={<JourneyTogether />} />
               <Route path="/journey-tracker" element={<JourneyTracker />} />
               <Route path="/mentor/:id/book" element={<BookSession />} />
