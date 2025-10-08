@@ -61,12 +61,12 @@ const App: React.FC = () => {
               <Route path="/" element={<Home />} />
               <Route path="/student-signup" element={<StudentSignup />} />
               <Route path="/signin" element={<SignIn />} />
-              <Route path="/profile" element={<Protected><Profile /></Protected>} />
-              <Route path="/find-mentor" element={<Protected><FindMentor /></Protected>} />
-              <Route path="/become-mentor" element={<Protected><BecomeMentor /></Protected>} />
-              <Route path="/journey-together" element={<Protected><JourneyTogether /></Protected>} />
-              <Route path="/journey-tracker" element={<Protected><JourneyTracker /></Protected>} />
-              <Route path="/mentor/:id/book" element={<Protected><BookSession /></Protected>} />
+              {/* <Route path="/profile" element={<Profile /> */}
+              <Route path="/find-mentor" element={<FindMentor />} />
+              <Route path="/become-mentor" element={<BecomeMentor/>} />
+              <Route path="/journey-together" element={<JourneyTogether />} />
+              <Route path="/journey-tracker" element={<JourneyTracker />} />
+              <Route path="/mentor/:id/book" element={<BookSession />} />
             </Routes>
             <ToastContainer
               position="top-right"
